@@ -1,25 +1,25 @@
-/** 
+/**
  * @file llrender2dutils.cpp
  * @brief GL function implementations for immediate-mode gl drawing.
  *
  * $LicenseInfo:firstyear=2001&license=viewerlgpl$
  * Second Life Viewer Source Code
  * Copyright (C) 2010, Linden Research, Inc.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
  * version 2.1 of the License only.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
@@ -123,7 +123,7 @@ void gl_rect_2d(S32 left, S32 top, S32 right, S32 bottom, BOOL filled )
 
 	// Counterclockwise quad will face the viewer
 	if( filled )
-	{ 
+	{
 		// <FS:Ansariel> Remove QUADS rendering mode
 		//gGL.begin( LLRender::QUADS );
 		//	gGL.vertex2i(left, top);
@@ -151,7 +151,7 @@ void gl_rect_2d(S32 left, S32 top, S32 right, S32 bottom, BOOL filled )
 			// Work around bug in ATI driver: vertical lines are offset by (-1,-1)
 			gGL.begin( LLRender::LINES );
 
-				// Verticals 
+				// Verticals
 				gGL.vertex2i(left + 1, top);
 				gGL.vertex2i(left + 1, bottom);
 
@@ -204,7 +204,7 @@ void gl_drop_shadow(S32 left, S32 top, S32 right, S32 bottom, const LLColor4 &st
 {
 	stop_glerror();
 	gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
-	
+
 	// HACK: Overlap with the rectangle by a single pixel.
 	right--;
 	bottom++;
@@ -307,7 +307,7 @@ void gl_line_2d(S32 x1, S32 y1, S32 x2, S32 y2 )
 	}
 
 	gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
-	
+
 	gGL.begin(LLRender::LINES);
 		gGL.vertex2i(x1, y1);
 		gGL.vertex2i(x2, y2);
@@ -364,13 +364,13 @@ void gl_corners_2d(S32 left, S32 top, S32 right, S32 bottom, S32 length, F32 max
 	gGL.begin(LLRender::LINES);
 	gGL.vertex2i(left, top);
 	gGL.vertex2i(left + length, top);
-	
+
 	gGL.vertex2i(left, top);
 	gGL.vertex2i(left, top - length);
 
 	gGL.vertex2i(left, bottom);
 	gGL.vertex2i(left + length, bottom);
-	
+
 	gGL.vertex2i(left, bottom);
 	gGL.vertex2i(left, bottom + length);
 
@@ -440,17 +440,8 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 		return;
 	}
 
-	if (solid_color)
-	{
-		if (LLGLSLShader::sNoFixedFunction)
-		{
-			gSolidColorProgram.bind();
-		}
-		else
-		{
-			gGL.getTexUnit(0)->setTextureColorBlend(LLTexUnit::TBO_REPLACE, LLTexUnit::TBS_PREV_COLOR);
-			gGL.getTexUnit(0)->setTextureAlphaBlend(LLTexUnit::TBO_MULT, LLTexUnit::TBS_TEX_ALPHA, LLTexUnit::TBS_VERT_ALPHA);
-		}
+	if (solid_color){
+		gSolidColorProgram.bind();
 	}
 
 	if (center_rect.mLeft == 0.f
@@ -485,7 +476,7 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 									uv_center_rect.mTop * image_height,
 									uv_center_rect.mRight * image_width,
 									uv_center_rect.mBottom * image_height);
-		
+
 		if (scale_inner)
 		{
 			// scale center region of image to drawn region
@@ -518,9 +509,9 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 		draw_center_rect.mRight  = ll_round(ui_translation.mV[VX] + (F32)draw_center_rect.mRight * ui_scale.mV[VX]);
 		draw_center_rect.mBottom = ll_round(ui_translation.mV[VY] + (F32)draw_center_rect.mBottom * ui_scale.mV[VY]);
 
-		LLRectf draw_outer_rect(ui_translation.mV[VX], 
-								ui_translation.mV[VY] + height * ui_scale.mV[VY], 
-								ui_translation.mV[VX] + width * ui_scale.mV[VX], 
+		LLRectf draw_outer_rect(ui_translation.mV[VX],
+								ui_translation.mV[VY] + height * ui_scale.mV[VY],
+								ui_translation.mV[VX] + width * ui_scale.mV[VX],
 								ui_translation.mV[VY]);
 
 		LLGLSUIDefault gls_ui;
@@ -528,7 +519,7 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 		gGL.getTexUnit(0)->bind(image, true);
 
 		gGL.color4fv(color.mV);
-	
+
 		// <FS:Ansariel> Remove QUADS rendering mode
 		//const S32 NUM_VERTICES = 9 * 4; // 9 quads
 		const S32 NUM_VERTICES = 9 * 6; // 9 quads
@@ -624,7 +615,7 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 			pos[index] = LLVector3(draw_center_rect.mRight, draw_center_rect.mBottom, 0.f);
 			index++;
 
-			// draw left 
+			// draw left
 			uv[index] = LLVector2(uv_outer_rect.mLeft, uv_center_rect.mBottom);
 			pos[index] = LLVector3(draw_outer_rect.mLeft, draw_center_rect.mBottom, 0.f);
 			index++;
@@ -678,7 +669,7 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 			pos[index] = LLVector3(draw_center_rect.mLeft, draw_center_rect.mTop, 0.f);
 			index++;
 
-			// draw right 
+			// draw right
 			uv[index] = LLVector2(uv_center_rect.mRight, uv_center_rect.mBottom);
 			pos[index] = LLVector3(draw_center_rect.mRight, draw_center_rect.mBottom, 0.f);
 			index++;
@@ -791,16 +782,8 @@ void gl_draw_scaled_image_with_border(S32 x, S32 y, S32 width, S32 height, LLTex
 		gGL.end();
 	}
 
-	if (solid_color)
-	{
-		if (LLGLSLShader::sNoFixedFunction)
-		{
-			gUIProgram.bind();
-		}
-		else
-		{
-			gGL.getTexUnit(0)->setTextureBlendType(LLTexUnit::TB_MULT);
-		}
+	if (solid_color){
+		gUIProgram.bind();
 	}
 }
 
@@ -960,35 +943,22 @@ void gl_draw_scaled_rotated_image(S32 x, S32 y, S32 width, S32 height, F32 degre
 	}
 }
 
-void gl_stippled_line_3d( const LLVector3& start, const LLVector3& end, const LLColor4& color, F32 phase )
-{
+void gl_stippled_line_3d( const LLVector3& start, const LLVector3& end, const LLColor4& color, F32 phase ){
 	phase = fmod(phase, 1.f);
-
-	S32 shift = S32(phase * 4.f) % 4;
-
 	// Stippled line
 	LLGLEnable stipple(GL_LINE_STIPPLE);
-	
 	gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], color.mV[VALPHA]);
-
 	gGL.flush();
 	gGL.setLineWidth(2.5f); // <FS> Line width OGL core profile fix by Rye Mutt
-
-	if (!LLGLSLShader::sNoFixedFunction)
-	{
-		glLineStipple(2, 0x3333 << shift);
-	}
-
 	gGL.begin(LLRender::LINES);
 	{
 		gGL.vertex3fv( start.mV );
 		gGL.vertex3fv( end.mV );
 	}
 	gGL.end();
-
 	LLRender2D::getInstance()->setLineWidth(1.f);
 }
-
+//------------------------------------------------------------------------------
 void gl_arc_2d(F32 center_x, F32 center_y, F32 radius, S32 steps, BOOL filled, F32 start_angle, F32 end_angle)
 {
 	if (end_angle < start_angle)
@@ -1116,72 +1086,30 @@ void gl_ring( F32 radius, F32 width, const LLColor4& center_color, const LLColor
 }
 
 // Draw gray and white checkerboard with black border
-void gl_rect_2d_checkerboard(const LLRect& rect, GLfloat alpha)
-{
-	if (!LLGLSLShader::sNoFixedFunction)
-	{ 
-	// Initialize the first time this is called.
-	const S32 PIXELS = 32;
-	static GLubyte checkerboard[PIXELS * PIXELS];
-	static BOOL first = TRUE;
-	if( first )
-	{
-		for( S32 i = 0; i < PIXELS; i++ )
-		{
-			for( S32 j = 0; j < PIXELS; j++ )
-			{
-				checkerboard[i * PIXELS + j] = ((i & 1) ^ (j & 1)) * 0xFF;
-			}
-		}
-		first = FALSE;
-	}
-	
-	gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
-
-	// ...white squares
-	gGL.color4f( 1.f, 1.f, 1.f, alpha );
-	gl_rect_2d(rect);
-
-	// ...gray squares
-	gGL.color4f( .7f, .7f, .7f, alpha );
-	gGL.flush();
-
-		glPolygonStipple( checkerboard );
-
-		LLGLEnable polygon_stipple(GL_POLYGON_STIPPLE);
-		gl_rect_2d(rect);
-	}
-	else
-	{ //polygon stipple is deprecated, use "Checker" texture
-		LLPointer<LLUIImage> img = LLRender2D::getInstance()->getUIImage("Checker");
-		gGL.getTexUnit(0)->bind(img->getImage());
-		gGL.getTexUnit(0)->setTextureAddressMode(LLTexUnit::TAM_WRAP);
-		gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_POINT);
-
-		LLColor4 color(1.f, 1.f, 1.f, alpha);
-		LLRectf uv_rect(0, 0, rect.getWidth()/32.f, rect.getHeight()/32.f);
-
-		gl_draw_scaled_image(rect.mLeft, rect.mBottom, rect.getWidth(), rect.getHeight(),
-			img->getImage(), color, uv_rect);
-	}
-	
+void gl_rect_2d_checkerboard(const LLRect& rect, GLfloat alpha){
+	//polygon stipple is deprecated, use "Checker" texture
+	LLPointer<LLUIImage> img = LLRender2D::getInstance()->getUIImage("Checker");
+	gGL.getTexUnit(0)->bind(img->getImage());
+	gGL.getTexUnit(0)->setTextureAddressMode(LLTexUnit::TAM_WRAP);
+	gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_POINT);
+	LLColor4 color(1.f, 1.f, 1.f, alpha);
+	LLRectf uv_rect(0, 0, rect.getWidth()/32.f, rect.getHeight()/32.f);
+	gl_draw_scaled_image(rect.mLeft, rect.mBottom, rect.getWidth(), rect.getHeight(),
+		img->getImage(), color, uv_rect);
 	gGL.flush();
 }
 
 
 // Draws the area between two concentric circles, like
 // a doughnut or washer.
-void gl_washer_2d(F32 outer_radius, F32 inner_radius, S32 steps, const LLColor4& inner_color, const LLColor4& outer_color)
-{
+void gl_washer_2d(F32 outer_radius, F32 inner_radius, S32 steps, const LLColor4& inner_color, const LLColor4& outer_color){
 	const F32 DELTA = F_TWO_PI / steps;
 	const F32 SIN_DELTA = sin( DELTA );
 	const F32 COS_DELTA = cos( DELTA );
-
 	F32 x1 = outer_radius;
 	F32 y1 = 0.f;
 	F32 x2 = inner_radius;
 	F32 y2 = 0.f;
-
 	gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
 
 	gGL.begin( LLRender::TRIANGLE_STRIP  );
@@ -1310,13 +1238,13 @@ void gl_rect_2d_simple( S32 width, S32 height )
 
 static LLTrace::BlockTimerStatHandle FTM_RENDER_SEGMENTED_RECT ("Render segmented rectangle");
 
-void gl_segmented_rect_2d_tex(const S32 left, 
-							  const S32 top, 
-							  const S32 right, 
-							  const S32 bottom, 
-							  const S32 texture_width, 
-							  const S32 texture_height, 
-							  const S32 border_size, 
+void gl_segmented_rect_2d_tex(const S32 left,
+							  const S32 top,
+							  const S32 right,
+							  const S32 bottom,
+							  const S32 texture_width,
+							  const S32 texture_height,
+							  const S32 border_size,
 							  const U32 edges)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_SEGMENTED_RECT);
@@ -1414,7 +1342,7 @@ void gl_segmented_rect_2d_tex(const S32 left,
 		gGL.texCoord2f(1.f - border_uv_scale.mV[VX], border_uv_scale.mV[VY]);
 		gGL.vertex2fv((width_vec - border_width_right + border_height_bottom).mV);
 
-		// draw left 
+		// draw left
 		gGL.texCoord2f(0.f, border_uv_scale.mV[VY]);
 		gGL.vertex2fv(border_height_bottom.mV);
 
@@ -1456,7 +1384,7 @@ void gl_segmented_rect_2d_tex(const S32 left,
 		gGL.texCoord2f(border_uv_scale.mV[VX], 1.f - border_uv_scale.mV[VY]);
 		gGL.vertex2fv((border_width_left + height_vec - border_height_top).mV);
 
-		// draw right 
+		// draw right
 		gGL.texCoord2f(1.f - border_uv_scale.mV[VX], border_uv_scale.mV[VY]);
 		gGL.vertex2fv((width_vec - border_width_right + border_height_bottom).mV);
 
@@ -1545,12 +1473,12 @@ void gl_segmented_rect_2d_tex(const S32 left,
 	gGL.popUIMatrix();
 }
 
-void gl_segmented_rect_2d_fragment_tex(const LLRect& rect, 
-	const S32 texture_width, 
-	const S32 texture_height, 
-	const S32 border_size, 
-	const F32 start_fragment, 
-	const F32 end_fragment, 
+void gl_segmented_rect_2d_fragment_tex(const LLRect& rect,
+	const S32 texture_width,
+	const S32 texture_height,
+	const S32 border_size,
+	const F32 start_fragment,
+	const F32 end_fragment,
 	const U32 edges)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_SEGMENTED_RECT);
@@ -1624,7 +1552,7 @@ void gl_segmented_rect_2d_fragment_tex(const LLRect& rect,
 			gGL.texCoord2f(u_min, border_uv_scale.mV[VY]);
 			gGL.vertex2fv((x_min + border_height_bottom).mV);
 
-			// draw left 
+			// draw left
 			gGL.texCoord2f(u_min, border_uv_scale.mV[VY]);
 			gGL.vertex2fv((x_min + border_height_bottom).mV);
 
@@ -1764,7 +1692,7 @@ void gl_segmented_rect_2d_fragment_tex(const LLRect& rect,
 			gGL.texCoord2f(u_min, border_uv_scale.mV[VY]);
 			gGL.vertex2fv((x_min + border_height_bottom).mV);
 
-			// draw right 
+			// draw right
 			gGL.texCoord2f(u_min, border_uv_scale.mV[VY]);
 			gGL.vertex2fv((x_min + border_height_bottom).mV);
 
@@ -1812,7 +1740,7 @@ void gl_segmented_rect_2d_fragment_tex(const LLRect& rect,
 	gGL.popUIMatrix();
 }
 
-void gl_segmented_rect_3d_tex(const LLRectf& clip_rect, const LLRectf& center_uv_rect, const LLRectf& center_draw_rect, 
+void gl_segmented_rect_3d_tex(const LLRectf& clip_rect, const LLRectf& center_uv_rect, const LLRectf& center_draw_rect,
 							 const LLVector3& width_vec, const LLVector3& height_vec)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_SEGMENTED_RECT);
@@ -1885,7 +1813,7 @@ void gl_segmented_rect_3d_tex(const LLRectf& clip_rect, const LLRectf& center_uv
 		gGL.texCoord2f(center_uv_rect.mRight, center_uv_rect.mBottom);
 		gGL.vertex3fv((center_draw_rect.mRight * width_vec + center_draw_rect.mBottom * height_vec).mV);
 
-		// draw left 
+		// draw left
 		gGL.texCoord2f(clip_rect.mLeft, center_uv_rect.mBottom);
 		gGL.vertex3fv((center_draw_rect.mBottom * height_vec).mV);
 
@@ -1927,7 +1855,7 @@ void gl_segmented_rect_3d_tex(const LLRectf& clip_rect, const LLRectf& center_uv
 		gGL.texCoord2f(center_uv_rect.mLeft, center_uv_rect.mTop);
 		gGL.vertex3fv((center_draw_rect.mLeft * width_vec + center_draw_rect.mTop * height_vec).mV);
 
-		// draw right 
+		// draw right
 		gGL.texCoord2f(center_uv_rect.mRight, center_uv_rect.mBottom);
 		gGL.vertex3fv((center_draw_rect.mRight * width_vec + center_draw_rect.mBottom * height_vec).mV);
 
@@ -2059,7 +1987,7 @@ void LLRender2D::popMatrix()
 
 void LLRender2D::loadIdentity()
 {
-	gGL.loadUIIdentity(); 
+	gGL.loadUIIdentity();
 	LLFontGL::sCurOrigin.mX = 0;
 	LLFontGL::sCurOrigin.mY = 0;
 	LLFontGL::sCurDepth = 0.f;
@@ -2135,4 +2063,3 @@ void LLImageProviderInterface::deleteOnRemovalCallback(callback_t func)
         mCallbackList.erase(iter);
     }
 }
-
