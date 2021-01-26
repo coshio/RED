@@ -823,7 +823,7 @@ void LLPipeline::resizeShadowTexture()
 void LLPipeline::resizeScreenTexture()
 {
 	LL_RECORD_BLOCK_TIME(FTM_RESIZE_SCREEN_TEXTURE);
-	if (gPipeline.canUseVertexShaders() && assertInitialized())
+	if (assertInitialized())
 	{
 		GLuint resX = gViewerWindow->getWorldViewWidthRaw();
 		GLuint resY = gViewerWindow->getWorldViewHeightRaw();
@@ -1522,10 +1522,7 @@ void LLPipeline::restoreGL()
 
 bool LLPipeline::canUseVertexShaders()
 {
-	if (sDisableShaders ||
-		!gGLManager.mHasVertexShader ||
-		!gGLManager.mHasFragmentShader ||
-		(assertInitialized() && mVertexShadersLoaded != 1) )
+	if (sDisableShaders || !gGLManager.mHasVertexShader || !gGLManager.mHasFragmentShader || (assertInitialized() && mVertexShadersLoaded != 1) )
 	{
 		return false;
 	}
@@ -2524,7 +2521,7 @@ void LLPipeline::updateCull(LLCamera& camera, LLCullResult& result, S32 water_cl
 
 	sCull->clear();
 
-	bool to_texture = LLPipeline::sUseOcclusion > 1 && gPipeline.canUseVertexShaders();
+	bool to_texture = LLPipeline::sUseOcclusion > 1;
 
 	if (to_texture)
 	{
@@ -2558,7 +2555,7 @@ void LLPipeline::updateCull(LLCamera& camera, LLCullResult& result, S32 water_cl
 	LLGLDepthTest depth(GL_TRUE, GL_FALSE);
 
 	bool bound_shader = false;
-	if (gPipeline.canUseVertexShaders() && LLGLSLShader::sCurBoundShader == 0)
+	if (LLGLSLShader::sCurBoundShader == 0)
 	{ //if no shader is currently bound, use the occlusion shader instead of fixed function if we can
 		// (shadow render uses a special shader that clamps to clip planes)
 		bound_shader = true;
@@ -2620,7 +2617,6 @@ void LLPipeline::updateCull(LLCamera& camera, LLCullResult& result, S32 water_cl
 		gSky.updateCull();
 		stop_glerror();
 	}
-
 	if (hasRenderType(LLPipeline::RENDER_TYPE_GROUND) &&
 		!gPipeline.canUseWindLightShaders() &&
 		gSky.mVOGroundp.notNull() &&
@@ -2630,16 +2626,14 @@ void LLPipeline::updateCull(LLCamera& camera, LLCullResult& result, S32 water_cl
 		gSky.mVOGroundp->mDrawable->setVisible(camera);
 		sCull->pushDrawable(gSky.mVOGroundp->mDrawable);
 	}
-
-
-    if (hasRenderType(LLPipeline::RENDER_TYPE_WL_SKY) &&
-        gPipeline.canUseWindLightShaders() &&
-        gSky.mVOWLSkyp.notNull() &&
-        gSky.mVOWLSkyp->mDrawable.notNull())
-    {
-        gSky.mVOWLSkyp->mDrawable->setVisible(camera);
-        sCull->pushDrawable(gSky.mVOWLSkyp->mDrawable);
-    }
+  if (hasRenderType(LLPipeline::RENDER_TYPE_WL_SKY) &&
+      gPipeline.canUseWindLightShaders() &&
+      gSky.mVOWLSkyp.notNull() &&
+      gSky.mVOWLSkyp->mDrawable.notNull())
+  {
+      gSky.mVOWLSkyp->mDrawable->setVisible(camera);
+      sCull->pushDrawable(gSky.mVOWLSkyp->mDrawable);
+  }
 
     bool render_water = !sReflectionRender && (hasRenderType(LLPipeline::RENDER_TYPE_WATER) || hasRenderType(LLPipeline::RENDER_TYPE_VOIDWATER));
 
@@ -8671,7 +8665,9 @@ void LLPipeline::renderDeferredLighting(LLRenderTarget *screen_target)
             bindDeferredShader(gDeferredBlurLightProgram);
             mDeferredVB->setBuffer(LLVertexBuffer::MAP_VERTEX);
             LLVector3 go          = RenderShadowGaussian;
-            const U32 kern_length = 4;
+            const U32 kern_length = 8;
+						// const U32 kern_length = 4;
+
             F32       blur_size   = RenderShadowBlurSize;
             F32       dist_factor = RenderShadowBlurDistFactor;
 

@@ -1,4 +1,4 @@
-/** 
+/**
  * @file llrender.h
  * @brief LLRender definition
  *
@@ -10,21 +10,21 @@
  * $LicenseInfo:firstyear=2001&license=viewerlgpl$
  * Second Life Viewer Source Code
  * Copyright (C) 2010, Linden Research, Inc.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
  * version 2.1 of the License only.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
@@ -75,7 +75,7 @@ public:
 		TT_CUBE_MAP,		    // 6-sided cube map texture
 		TT_MULTISAMPLE_TEXTURE, // see GL_ARB_texture_multisample
         TT_TEXTURE_3D,          // standard 3D Texture
-		TT_NONE, 		        // No texture type is currently enabled        
+		TT_NONE, 		        // No texture type is currently enabled
 	} eTextureType;
 
 	typedef enum
@@ -93,7 +93,7 @@ public:
 		TFO_ANISOTROPIC			// Equal to: min=anisotropic, max=anisotropic, mip=linear.
 	} eTextureFilterOptions;
 
-	typedef enum 
+	typedef enum
 	{
 		TB_REPLACE = 0,
 		TB_ADD,
@@ -103,7 +103,7 @@ public:
 		TB_COMBINE			// Doesn't need to be set directly, setTexture___Blend() set TB_COMBINE automatically
 	} eTextureBlendType;
 
-	typedef enum 
+	typedef enum
 	{
 		TBO_REPLACE = 0,			// Use Source 1
 		TBO_MULT,					// Multiply: ( Source1 * Source2 )
@@ -121,7 +121,7 @@ public:
 										// and falls back to TBO_LERP_VERTEX_ALPHA for setTextureAlphaBlend().
 	} eTextureBlendOp;
 
-	typedef enum 
+	typedef enum
 	{
 		TBS_PREV_COLOR = 0,			// Color from the previous texture stage
 		TBS_PREV_ALPHA,
@@ -157,54 +157,54 @@ public:
 	S32 getIndex(void) const { return mIndex; }
 
 	// Sets this tex unit to be the currently active one
-	void activate(void); 
+	void activate(void);
 
-	// Enables this texture unit for the given texture type 
+	// Enables this texture unit for the given texture type
 	// (automatically disables any previously enabled texture type)
-	void enable(eTextureType type); 
+	void enable(eTextureType type);
 
 	// Disables the current texture unit
-	void disable(void);	
-	
-	// Binds the LLImageGL to this texture unit 
+	void disable(void);
+
+	// Binds the LLImageGL to this texture unit
 	// (automatically enables the unit for the LLImageGL's texture type)
 	bool bind(LLImageGL* texture, bool for_rendering = false, bool forceBind = false);
     bool bind(LLTexture* texture, bool for_rendering = false, bool forceBind = false);
 
-	// Binds a cubemap to this texture unit 
+	// Binds a cubemap to this texture unit
 	// (automatically enables the texture unit for cubemaps)
 	bool bind(LLCubeMap* cubeMap);
 
-	// Binds a render target to this texture unit 
+	// Binds a render target to this texture unit
 	// (automatically enables the texture unit for the RT's texture type)
 	bool bind(LLRenderTarget * renderTarget, bool bindDepth = false);
 
-	// Manually binds a texture to the texture unit 
+	// Manually binds a texture to the texture unit
 	// (automatically enables the tex unit for the given texture type)
 	bool bindManual(eTextureType type, U32 texture, bool hasMips = false);
-	
-	// Unbinds the currently bound texture of the given type 
+
+	// Unbinds the currently bound texture of the given type
 	// (only if there's a texture of the given type currently bound)
 	void unbind(eTextureType type);
 
 	// Sets the addressing mode used to sample the texture
-	// Warning: this stays set for the bound texture forever, 
+	// Warning: this stays set for the bound texture forever,
 	// make sure you want to permanently change the address mode  for the bound texture.
 	void setTextureAddressMode(eTextureAddressMode mode);
 
 	// Sets the filtering options used to sample the texture
-	// Warning: this stays set for the bound texture forever, 
+	// Warning: this stays set for the bound texture forever,
 	// make sure you want to permanently change the filtering for the bound texture.
 	void setTextureFilteringOption(LLTexUnit::eTextureFilterOptions option);
 
 	void setTextureBlendType(eTextureBlendType type);
 
 	inline void setTextureColorBlend(eTextureBlendOp op, eTextureBlendSrc src1, eTextureBlendSrc src2 = TBS_PREV_COLOR)
-	{ setTextureCombiner(op, src1, src2, false); }
+	{}
 
 	// NOTE: If *_COLOR enums are passed to src1 or src2, the corresponding *_ALPHA enum will be used instead.
 	inline void setTextureAlphaBlend(eTextureBlendOp op, eTextureBlendSrc src1, eTextureBlendSrc src2 = TBS_PREV_ALPHA)
-	{ setTextureCombiner(op, src1, src2, true); }
+	{}
 
 	static U32 getInternalType(eTextureType type);
 
@@ -233,13 +233,12 @@ protected:
 	S32					mCurrColorScale;
 	S32					mCurrAlphaScale;
 	bool				mHasMipMaps;
-	
+
 	void debugTextureUnit(void);
 	void setColorScale(S32 scale);
 	void setAlphaScale(S32 scale);
 	GLint getTextureSource(eTextureBlendSrc src);
 	GLint getTextureSourceType(eTextureBlendSrc src, bool isAlpha = false);
-	void setTextureCombiner(eTextureBlendOp op, eTextureBlendSrc src1, eTextureBlendSrc src2, bool isAlpha = false);
 };
 
 class LLLightState
@@ -293,7 +292,7 @@ public:
 		DIFFUSE_MAP           = 0,
         ALTERNATE_DIFFUSE_MAP = 1,
 		NORMAL_MAP            = 1,
-		SPECULAR_MAP          = 2,        
+		SPECULAR_MAP          = 2,
 		NUM_TEXTURE_CHANNELS  = 3,
 	};
 
@@ -303,7 +302,7 @@ public:
 		SCULPT_TEX,
 		NUM_VOLUME_TEXTURE_CHANNELS,
 	};
-	
+
 	typedef enum {
 		TRIANGLES = 0,
 		TRIANGLE_STRIP,
@@ -317,7 +316,7 @@ public:
 		NUM_MODES
 	} eGeomModes;
 
-	typedef enum 
+	typedef enum
 	{
 		CF_NEVER = 0,
 		CF_ALWAYS,
@@ -330,7 +329,7 @@ public:
 		CF_DEFAULT
 	}  eCompareFunc;
 
-	typedef enum 
+	typedef enum
 	{
 		BT_ALPHA = 0,
 		BT_ADD,
@@ -341,7 +340,7 @@ public:
 		BT_REPLACE
 	} eBlendType;
 
-	typedef enum 
+	typedef enum
 	{
 		BF_ONE = 0,
 		BF_ZERO,
@@ -377,7 +376,7 @@ public:
 	void initVB();
 	void destroyVB();
 	// </FS:Ansariel>
-	
+
 	// Refreshes renderer state to the cached values
 	// Needed when the render context has changed and invalidated the current state
 	void refreshState(void);
@@ -392,7 +391,7 @@ public:
 	void loadMatrix(const GLfloat* m);
 	void loadIdentity();
 	void multMatrix(const GLfloat* m);
-	void matrixMode(eMatrixMode mode);	
+	void matrixMode(eMatrixMode mode);
 	eMatrixMode getMatrixMode();
 
 	const glh::matrix4f& getModelviewMatrix();
@@ -418,7 +417,7 @@ public:
 	void vertex3f(const GLfloat& x, const GLfloat& y, const GLfloat& z);
 	void vertex2fv(const GLfloat* v);
 	void vertex3fv(const GLfloat* v);
-	
+
 	void texCoord2i(const GLint& x, const GLint& y);
 	void texCoord2f(const GLfloat& x, const GLfloat& y);
 	void texCoord2fv(const GLfloat* tc);
@@ -455,7 +454,7 @@ public:
 
 	LLLightState* getLight(U32 index);
 	void setAmbientLightColor(const LLColor4& color);
-	
+
 	void setLineWidth(F32 line_width); // <FS> Line width OGL core profile fix by Rye Mutt
 
 	LLTexUnit* getTexUnit(U32 index);
@@ -491,7 +490,7 @@ private:
 	U32 mCurMatHash[NUM_MATRIX_MODES];
 	U32 mLightHash;
 	LLColor4 mAmbientLightColor;
-	
+
 	bool			mDirty;
 	// <FS:Ansariel> Remove QUADS rendering mode
 	//U32				mQuadCycle;
@@ -535,7 +534,7 @@ extern S32 gGLViewport[4];
 
 extern LLRender gGL;
 
-// This rotation matrix moves the default OpenGL reference frame 
+// This rotation matrix moves the default OpenGL reference frame
 // (-Z at, Y up) to Cory's favorite reference frame (X at, Z up)
 const F32 OGL_TO_CFR_ROTATION[16] = {  0.f,  0.f, -1.f,  0.f, 	// -Z becomes X
 									  -1.f,  0.f,  0.f,  0.f, 	// -X becomes Y
@@ -561,7 +560,7 @@ glh::matrix4f gl_lookat(LLVector3 eye, LLVector3 center, LLVector3 up);
     #define LL_SHADER_UNIFORM_ERRS(...)  LL_WARNS_ONCE("Shader")
 #else
     #define LL_SHADER_LOADING_WARNS(...) LL_WARNS()
-    #define LL_SHADER_UNIFORM_ERRS(...)  LL_ERRS("Shader")    
+    #define LL_SHADER_UNIFORM_ERRS(...)  LL_ERRS("Shader")
 #endif
 
 #endif

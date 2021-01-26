@@ -691,24 +691,10 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 
 	if (major_version >= 4){
 	    //set version to 400
-	shader_code_text[shader_code_count++] = strdup("#version 400\n");
+			shader_code_text[shader_code_count++] = strdup("#version 400\n");
 	}
 	if (major_version == 3){
-	    if (minor_version < 10){
-	  shader_code_text[shader_code_count++] = strdup("#version 300\n");
-	}
-	else if (minor_version <= 19)
-	{
-	  shader_code_text[shader_code_count++] = strdup("#version 310\n");
-	}
-	else if (minor_version <= 29)
-	{
-	  shader_code_text[shader_code_count++] = strdup("#version 320\n");
-	}
-  else
-  {
-      shader_code_text[shader_code_count++] = strdup("#version 330\n");
-  }
+		shader_code_text[shader_code_count++] = strdup("#version 330\n");
 	}
 
 
@@ -767,44 +753,36 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 		extra_code_text[extra_code_count++] = strdup("{\n");
 
 
-		if (texture_index_channels == 1)
-		{ //don't use flow control, that's silly
+		//TODO: Clean this up.
+		if (texture_index_channels == 1){ //don't use flow control, that's silly
 			extra_code_text[extra_code_count++] = strdup("return texture2D(tex0, texcoord);\n");
 			extra_code_text[extra_code_count++] = strdup("}\n");
 		}
-		else if (major_version > 1 || minor_version >= 30)
-		{  //switches are supported in GLSL 1.30 and later
-			if (gGLManager.mIsNVIDIA)
-			{ //switches are unreliable on some NVIDIA drivers
-				for (U32 i = 0; i < texture_index_channels; ++i)
-				{
+		else if (major_version > 1 || minor_version >= 30){  //switches are supported in GLSL 1.30 and later
+			if (gGLManager.mIsNVIDIA){ //switches are unreliable on some NVIDIA drivers
+				for (U32 i = 0; i < texture_index_channels; ++i){
 					std::string if_string = llformat("\t%sif (vary_texture_index == %d) { return texture2D(tex%d, texcoord); }\n", i > 0 ? "else " : "", i, i);
 					extra_code_text[extra_code_count++] = strdup(if_string.c_str());
 				}
 				extra_code_text[extra_code_count++] = strdup("\treturn vec4(1,0,1,1);\n");
 				extra_code_text[extra_code_count++] = strdup("}\n");
 			}
-			else
-			{
+			else{
 				extra_code_text[extra_code_count++] = strdup("\tvec4 ret = vec4(1,0,1,1);\n");
 				extra_code_text[extra_code_count++] = strdup("\tswitch (vary_texture_index)\n");
 				extra_code_text[extra_code_count++] = strdup("\t{\n");
-
 				//switch body
 				for (S32 i = 0; i < texture_index_channels; ++i)
 				{
 					std::string case_str = llformat("\t\tcase %d: return texture2D(tex%d, texcoord);\n", i, i);
 					extra_code_text[extra_code_count++] = strdup(case_str.c_str());
 				}
-
 				extra_code_text[extra_code_count++] = strdup("\t}\n");
 				extra_code_text[extra_code_count++] = strdup("\treturn ret;\n");
 				extra_code_text[extra_code_count++] = strdup("}\n");
 			}
 		}
-		else
-		{ //should never get here.  Indexed texture rendering requires GLSL 1.30 or later
-			// (for passing integers between vertex and fragment shaders)
+		else{
 			LL_ERRS() << "Indexed texture rendering requires GLSL 1.30 or later." << LL_ENDL;
 		}
 	}

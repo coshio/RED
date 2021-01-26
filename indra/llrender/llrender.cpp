@@ -568,12 +568,6 @@ GLint LLTexUnit::getTextureSourceType(eTextureBlendSrc src, bool isAlpha)
 	}
 }
 //------------------------------------------------------------------------------
-
-void LLTexUnit::setTextureCombiner(eTextureBlendOp op, eTextureBlendSrc src1, eTextureBlendSrc src2, bool isAlpha){
-	//register combiners do nothing when not using fixed function
-	return;
-}
-//------------------------------------------------------------------------------
 void LLTexUnit::setColorScale(S32 scale)
 {
 	if (mCurrColorScale != scale || gGL.mDirty)

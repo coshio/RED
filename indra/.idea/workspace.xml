@@ -10,7 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8683bfdc-ae70-42a0-8d1d-46e7b29b994c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llrender/llgl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llgl.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llrender/llrender.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llrender.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llrender/llrender.h" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llrender.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llrender/llshadermgr.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llshadermgr.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/softenLightF.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/softenLightF.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/lldrawpoolalpha.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/lldrawpoolalpha.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/lldrawpoolbump.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/lldrawpoolbump.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llmaniprotate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llmaniprotate.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llmaniptranslate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llmaniptranslate.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llvosky.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llvosky.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/pipeline.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/pipeline.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,8 +55,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/llrender/llrender.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="147" column="1" lean-forward="true" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
+            <state relative-caret-position="183">
+              <caret line="134" column="66" selection-start-line="134" selection-start-column="66" selection-end-line="134" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -60,6 +70,10 @@
       <find>flat in</find>
       <find>FIXEDFUNCTION</find>
       <find>fixedfunction</find>
+      <find>mGLVersion</find>
+      <find>setTextureCombiner</find>
+      <find>setTextureBlend</find>
+      <find>gGL.getTexUnit(0)</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Artemis\Desktop\SecondLifeVanillaDev\PullerDevFirestorm\RED\indra</dir>
@@ -129,16 +143,15 @@
       <option name="presentableId" value="Default" />
       <updated>1611546001176</updated>
       <workItem from="1611546004363" duration="3549000" />
-      <workItem from="1611606963731" duration="4969000" />
+      <workItem from="1611606963731" duration="12366000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8518000" />
+    <option name="totallyTimeSpent" value="15915000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15405117" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -170,8 +183,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/llrender/llrender.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="147" column="1" lean-forward="true" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
+        <state relative-caret-position="183">
+          <caret line="134" column="66" selection-start-line="134" selection-start-column="66" selection-end-line="134" selection-end-column="66" />
         </state>
       </provider>
     </entry>
