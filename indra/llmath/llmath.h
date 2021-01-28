@@ -489,7 +489,7 @@ inline U32 get_next_power_two(U32 val, U32 max_power_two)
 //get the gaussian value given the linear distance from axis x and guassian value o
 inline F32 llgaussian(F32 x, F32 o)
 {
-	return 1.f/(F_SQRT_TWO_PI*o)*powf(F_E, -(x*x)/(2*o*o));
+	return 1.f / (F_SQRT_TWO_PI * o)* powf(F_E, -(x * x) / (2 * o * o));
 }
 
 //helper function for removing outliers

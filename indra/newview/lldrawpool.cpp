@@ -425,10 +425,7 @@ void LLRenderPass::pushMaskBatches(U32 type, U32 mask, BOOL texture, BOOL batch_
 			{
 				LLGLSLShader::sCurBoundShaderPtr->setMinimumAlpha(pparams->mAlphaMaskCutoff);
 			}
-			else
-			{
-				gGL.setAlphaRejectSettings(LLRender::CF_GREATER, pparams->mAlphaMaskCutoff);
-			}
+
 			
 			pushBatch(*pparams, mask, texture, batch_textures);
 		}

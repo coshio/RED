@@ -200,35 +200,21 @@ void LLDrawPoolAlpha::beginRenderPass(S32 pass)
 
     if (LLPipeline::sImpostorRender)
 	{
-        if (mShaderLevel > 0)
-		{
-            fullbright_shader->bind();
-			fullbright_shader->setMinimumAlpha(0.5f);
-            fullbright_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
-			simple_shader->bind();
-			simple_shader->setMinimumAlpha(0.5f);
-            simple_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
-        }
-        else
-        {
-            gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.5f); //OK
-        }
+		fullbright_shader->bind();
+		fullbright_shader->setMinimumAlpha(0.5f);
+		fullbright_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
+		simple_shader->bind();
+		simple_shader->setMinimumAlpha(0.5f);
+		simple_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
 	}
     else
 	{
-        if (mShaderLevel > 0)
-	    {
-			fullbright_shader->bind();
-			fullbright_shader->setMinimumAlpha(0.f);
-            fullbright_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
-			simple_shader->bind();
-			simple_shader->setMinimumAlpha(0.f);
-            simple_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
-		}
-        else
-        {
-            gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT); //OK
-        }
+		fullbright_shader->bind();
+		fullbright_shader->setMinimumAlpha(0.f);
+		fullbright_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
+		simple_shader->bind();
+		simple_shader->setMinimumAlpha(0.f);
+		simple_shader->uniform1i(LLShaderMgr::NO_ATMO, LLPipeline::sRenderingHUDs ? 1 : 0);
     }
 	gPipeline.enableLightsDynamic();
 

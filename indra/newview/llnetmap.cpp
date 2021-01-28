@@ -500,7 +500,6 @@ void LLNetMap::draw()
 				// </FS:Ansariel>
 
 				// Draw water
-				gGL.setAlphaRejectSettings(LLRender::CF_GREATER, ABOVE_WATERLINE_ALPHA / 255.f);
 				{
 					if (regionp->getLand().getWaterTexture())
 					{
@@ -536,7 +535,6 @@ void LLNetMap::draw()
 						// </FS:Ansariel>
 					}
 				}
-				gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 // [SL:KB] - Patch: World-MinimapOverlay | Checked: 2012-07-26 (Catznip-3.3)
 			}
 // [/SL:KB]

@@ -8594,9 +8594,7 @@ void LLPipeline::renderDeferredLighting(LLRenderTarget *screen_target)
                 }
 
                 gDeferredSunProgram.uniform3fv(sOffset, slice, offset);
-                gDeferredSunProgram.uniform2f(LLShaderMgr::DEFERRED_SCREEN_RES,
-                                              deferred_light_target->getWidth(),
-                                              deferred_light_target->getHeight());
+                gDeferredSunProgram.uniform2f(LLShaderMgr::DEFERRED_SCREEN_RES, deferred_light_target->getWidth(), deferred_light_target->getHeight());
 
                 {
                     LLGLDisable   blend(GL_BLEND);
@@ -8623,10 +8621,10 @@ void LLPipeline::renderDeferredLighting(LLRenderTarget *screen_target)
             bindDeferredShader(gDeferredBlurLightProgram);
             mDeferredVB->setBuffer(LLVertexBuffer::MAP_VERTEX);
             LLVector3 go          = RenderShadowGaussian;
-            const U32 kern_length = 8;
-						// const U32 kern_length = 4;
+						const U32 kern_length = 4;
 
             F32       blur_size   = RenderShadowBlurSize;
+
             F32       dist_factor = RenderShadowBlurDistFactor;
 
             // sample symmetrically with the middle sample falling exactly on 0.0

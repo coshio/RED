@@ -4312,7 +4312,6 @@ void renderMeshPhysicsTriangles(const LLColor4& color, const LLColor4& line_colo
 		else
 		{
 			// </FS:Ansariel>
-			gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 				gGL.diffuseColor4fv(color.mV);
@@ -4349,7 +4348,6 @@ void renderMeshPhysicsTriangles(const LLColor4& color, const LLColor4& line_colo
 	else
 	{
 		// </FS:Ansariel>
-		gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			gGL.diffuseColor4fv(color.mV);

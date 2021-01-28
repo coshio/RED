@@ -350,7 +350,6 @@ void LLDrawPoolAlphaMask::render(S32 pass)
 	{
 		LLGLEnable test(GL_ALPHA_TEST);
 		pushMaskBatches(LLRenderPass::PASS_ALPHA_MASK, getVertexDataMask(), TRUE, FALSE);
-		gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT); //OK
 	}
 }
 
@@ -450,7 +449,6 @@ void LLDrawPoolFullbrightAlphaMask::render(S32 pass)
 		gPipeline.enableLightsFullbright();
 		pushMaskBatches(LLRenderPass::PASS_FULLBRIGHT_ALPHA_MASK, getVertexDataMask(), TRUE, FALSE);
 		gPipeline.enableLightsDynamic();
-		gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT); //OK
 	}
 }
 
@@ -566,7 +564,6 @@ void LLDrawPoolGrass::beginRenderPass(S32 pass)
 	}
 	else 
 	{
-		gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.5f);
 		// don't use shaders!
 		if (gGLManager.mHasShaderObjects)
 		{
@@ -579,15 +576,7 @@ void LLDrawPoolGrass::endRenderPass(S32 pass)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_GRASS);
 	LLRenderPass::endRenderPass(pass);
-
-	if (mShaderLevel > 0)
-	{
-		simple_shader->unbind();
-	}
-	else
-	{
-		gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
-	}
+	simple_shader->unbind();
 }
 
 void LLDrawPoolGrass::render(S32 pass)

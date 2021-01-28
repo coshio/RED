@@ -5619,22 +5619,17 @@ U32 LLVOAvatar::renderTransparent(BOOL first_pass)
 	U32 num_indices = 0;
 	if( isWearingWearableType( LLWearableType::WT_SKIRT ) && (isUIAvatar() || isTextureVisible(TEX_SKIRT_BAKED)) )
 	{
-		gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.25f);
 		LLViewerJoint* skirt_mesh = getViewerJoint(MESH_ID_SKIRT);
 		if (skirt_mesh)
 		{
 			num_indices += skirt_mesh->render(mAdjustedPixelArea, FALSE);
 		}
 		first_pass = FALSE;
-		gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 	}
 
 	if (!isSelf() || gAgent.needsRenderHead() || LLPipeline::sShadowRender)
 	{
-		if (LLPipeline::sImpostorRender)
-		{
-			gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.5f);
-		}
+
 		
 		if (isTextureVisible(TEX_HEAD_BAKED))
 		{
@@ -5653,10 +5648,6 @@ U32 LLVOAvatar::renderTransparent(BOOL first_pass)
 				num_indices += hair_mesh->render(mAdjustedPixelArea, first_pass, mIsDummy);
 			}
 			first_pass = FALSE;
-		}
-		if (LLPipeline::sImpostorRender)
-		{
-			gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 		}
 	}
 	
@@ -5754,7 +5745,6 @@ U32 LLVOAvatar::renderImpostor(LLColor4U color, S32 diffuse_channel)
 	}
 	{
 	LLGLEnable test(GL_ALPHA_TEST);
-	gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.f);
 
 	gGL.color4ubv(color.mV);
 	gGL.getTexUnit(diffuse_channel)->bind(&mImpostor);
