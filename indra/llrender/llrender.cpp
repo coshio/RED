@@ -121,7 +121,7 @@ void LLTexUnit::refreshState(void){
 	// We set dirty to true so that the tex unit knows to ignore caching
 	// and we reset the cached tex unit state
 	gGL.flush();
-	glActiveTextureARB(GL_TEXTURE0_ARB + mIndex);
+	glActiveTextureARB(GL_TEXTURE0 + mIndex);
 	// Per apple spec, don't call glEnable/glDisable when index exceeds max texture units
 	// http://www.mailinglistarchive.com/html/mac-opengl@lists.apple.com/2008-07/msg00653.html
 	//
@@ -139,7 +139,7 @@ void LLTexUnit::activate(void){
 	if (mIndex < 0) return;
 	if ((S32)gGL.mCurrTextureUnitIndex != mIndex || gGL.mDirty){
 		gGL.flush();
-		glActiveTextureARB(GL_TEXTURE0_ARB + mIndex);
+		glActiveTextureARB(GL_TEXTURE0 + mIndex);
 		gGL.mCurrTextureUnitIndex = mIndex;
 	}
 }
@@ -556,9 +556,9 @@ void LLTexUnit::debugTextureUnit(void)
 
 	GLint activeTexture;
 	glGetIntegerv(GL_ACTIVE_TEXTURE_ARB, &activeTexture);
-	if ((GL_TEXTURE0_ARB + mIndex) != activeTexture)
+	if ((GL_TEXTURE0 + mIndex) != activeTexture)
 	{
-		U32 set_unit = (activeTexture - GL_TEXTURE0_ARB);
+		U32 set_unit = (activeTexture - GL_TEXTURE0);
 		LL_WARNS() << "Incorrect Texture Unit!  Expected: " << set_unit << " Actual: " << mIndex << LL_ENDL;
 	}
 }

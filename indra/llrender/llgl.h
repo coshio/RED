@@ -1,25 +1,25 @@
-/** 
+/**
  * @file llgl.h
  * @brief LLGL definition
  *
  * $LicenseInfo:firstyear=2001&license=viewerlgpl$
  * Second Life Viewer Source Code
  * Copyright (C) 2010, Linden Research, Inc.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
  * version 2.1 of the License only.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
@@ -41,7 +41,6 @@
 #include "llplane.h"
 #include "llgltypes.h"
 #include "llinstancetracker.h"
-
 #include "llglheaders.h"
 
 #if LL_LINUX && (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__ ) >= 70000
@@ -96,7 +95,7 @@ public:
 	BOOL mHasFramebufferObject;
 	S32 mMaxSamples;
 	BOOL mHasBlendFuncSeparate;
-		
+
 	// ARB Extensions
 	BOOL mHasVertexBufferObject;
 	BOOL mHasVertexArrayObject;
@@ -115,7 +114,6 @@ public:
 	BOOL mHasDrawBuffers;
 	BOOL mHasDepthClamp;
 	BOOL mHasTextureRectangle;
-	BOOL mHasTextureMultisample;
 	BOOL mHasTransformFeedback;
 	S32 mMaxSampleMaskWords;
 	S32 mMaxColorTextureSamples;
@@ -145,7 +143,7 @@ public:
 	// Needed to distinguish problem cards on older Macs that break with Materials
 	BOOL mIsMobileGF;
 #endif
-	
+
 	// Whether this version of GL is good enough for SL to use
 	BOOL mHasRequirements;
 
@@ -154,7 +152,7 @@ public:
 
 	//whether this GPU is in the debug list.
 	BOOL mDebugGPU;
-	
+
 	S32 mDriverVersionMajor;
 	S32 mDriverVersionMinor;
 	S32 mDriverVersionRelease;
@@ -168,7 +166,7 @@ public:
 	S32 mGLMaxVertexRange;
 	S32 mGLMaxIndexRange;
 	S32 mGLMaxTextureSize;
-	
+
 	void getPixelFormat(); // Get the best pixel format
 
 	std::string getGLInfoString();
@@ -195,9 +193,6 @@ class LLQuaternion;
 class LLMatrix4;
 
 void rotate_quat(LLQuaternion& rotation);
-
-void flush_glerror(); // Flush GL errors when we know we're handling them correctly.
-
 void log_glerror();
 void assert_glerror();
 
@@ -223,18 +218,18 @@ void clear_glerror();
 /*
 	GL STATE MANAGEMENT DESCRIPTION
 
-	LLGLState and its two subclasses, LLGLEnable and LLGLDisable, manage the current 
-	enable/disable states of the GL to prevent redundant setting of state within a 
+	LLGLState and its two subclasses, LLGLEnable and LLGLDisable, manage the current
+	enable/disable states of the GL to prevent redundant setting of state within a
 	render path or the accidental corruption of what state the next path expects.
 
 	Essentially, wherever you would call glEnable set a state and then
-	subsequently reset it by calling glDisable (or vice versa), make an instance of 
+	subsequently reset it by calling glDisable (or vice versa), make an instance of
 	LLGLEnable with the state you want to set, and assume it will be restored to its
 	original state when that instance of LLGLEnable is destroyed.  It is good practice
-	to exploit stack frame controls for optimal setting/unsetting and readability of 
+	to exploit stack frame controls for optimal setting/unsetting and readability of
 	code.  In llglstates.h, there are a collection of helper classes that define groups
 	of enables/disables that can cause multiple states to be set with the creation of
-	one instance.  
+	one instance.
 
 	Sample usage:
 
@@ -262,7 +257,7 @@ void clear_glerror();
 
 	LLGLState works by maintaining a map of the current GL states, and ignoring redundant
 	enables/disables.  If a redundant call is attempted, it becomes a noop, otherwise,
-	it is set in the constructor and reset in the destructor.  
+	it is set in the constructor and reset in the destructor.
 
 	For debugging GL state corruption, running with debug enabled will trigger asserts
 	if the existing GL state does not match the expected GL state.
@@ -282,10 +277,10 @@ public:
 	static void checkStates(const std::string& msg = "");
 	static void checkTextureChannels(const std::string& msg = "");
 	static void checkClientArrays(const std::string& msg = "", U32 data_mask = 0);
-	
+
 protected:
 	static boost::unordered_map<LLGLenum, LLGLboolean> sStateMap;
-	
+
 public:
 	enum { CURRENT_STATE = -2 };
 	LLGLState(LLGLenum state, S32 enabled = CURRENT_STATE);
@@ -344,7 +339,7 @@ public:
   Store and modify projection matrix to create an oblique
   projection that clips to the specified plane.  Oblique
   projections alter values in the depth buffer, so this
-  class should not be used mid-renderpass.  
+  class should not be used mid-renderpass.
 
   Restores projection matrix on destruction.
   GL_MODELVIEW_MATRIX is active whenever program execution
@@ -352,10 +347,10 @@ public:
   Does not stack.
   Caches inverse of projection matrix used in gGLObliqueProjectionInverse
 */
-class LLGLUserClipPlane 
+class LLGLUserClipPlane
 {
 public:
-	
+
 	LLGLUserClipPlane(const LLPlane& plane, const glh::matrix4f& modelview, const glh::matrix4f& projection, bool apply = true);
 	~LLGLUserClipPlane();
 
@@ -415,19 +410,19 @@ public:
 
 	LLGLNamePool();
 	virtual ~LLGLNamePool();
-	
+
 	void upkeep();
 	void cleanup();
-	
+
 	GLuint allocate();
 	void release(GLuint name);
-	
+
 	static void upkeepPools();
 	static void cleanupPools();
 
 protected:
 	typedef std::vector<LLGLNamePool*> pool_list_t;
-	
+
 	virtual GLuint allocateName() = 0;
 	virtual void releaseName(GLuint name) = 0;
 };
@@ -481,7 +476,7 @@ public:
 #ifdef GL_ARB_sync
 	GLsync mSync;
 #endif
-	
+
 	LLGLSyncFence();
 	virtual ~LLGLSyncFence();
 
@@ -563,6 +558,6 @@ extern BOOL gGLActive;
 
 #ifndef GL_DEPTH24_STENCIL8
 #define GL_DEPTH24_STENCIL8 GL_DEPTH24_STENCIL8_EXT
-#endif 
+#endif
 
 #endif // LL_LLGL_H

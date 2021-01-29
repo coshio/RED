@@ -1,25 +1,25 @@
-/** 
+/**
  * @file lldrawpoolwater.cpp
  * @brief LLDrawPoolWater class implementation
  *
  * $LicenseInfo:firstyear=2002&license=viewerlgpl$
  * Second Life Viewer Source Code
  * Copyright (C) 2010, Linden Research, Inc.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
  * version 2.1 of the License only.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
@@ -185,21 +185,14 @@ void LLDrawPoolWater::render(S32 pass)
 	LLVOSky *voskyp = gSky.mVOSkyp;
 
 	stop_glerror();
-
-	if (!gGLManager.mHasMultitexture)
-	{
-		// Ack!  No multitexture!  Bail!
-		return;
-	}
-
 	LLFace* refl_face = voskyp->getReflFace();
 
 	gPipeline.disableLights();
-	
+
 	LLGLDepthTest gls_depth(GL_TRUE, GL_FALSE);
 
 	LLGLDisable cullFace(GL_CULL_FACE);
-	
+
 	// Set up second pass first
 	gGL.getTexUnit(1)->activate();
 	gGL.getTexUnit(1)->enable(LLTexUnit::TT_TEXTURE);
@@ -244,7 +237,7 @@ void LLDrawPoolWater::render(S32 pass)
 	gGL.getTexUnit(1)->setTextureAlphaBlend(LLTexUnit::TBO_REPLACE, LLTexUnit::TBS_PREV_ALPHA);
 
 	gGL.getTexUnit(0)->activate();
-	
+
 	glClearStencil(1);
 	glClear(GL_STENCIL_BUFFER_BIT);
 	LLGLEnable gls_stencil(GL_STENCIL_TEST);
@@ -283,7 +276,7 @@ void LLDrawPoolWater::render(S32 pass)
 	gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
 
 	stop_glerror();
-	
+
 	if (gSky.mVOSkyp->getCubeMap())
 	{
 		gSky.mVOSkyp->getCubeMap()->enable(0);
@@ -313,7 +306,7 @@ void LLDrawPoolWater::render(S32 pass)
 			}
 
 			if (face->getGeomCount() > 0)
-			{					
+			{
 				face->renderIndexed();
 			}
 		}
@@ -321,13 +314,13 @@ void LLDrawPoolWater::render(S32 pass)
 		gGL.getTexUnit(0)->setTextureBlendType(LLTexUnit::TB_MULT);
 
 		gSky.mVOSkyp->getCubeMap()->disable();
-		
+
 		gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
 		gGL.getTexUnit(0)->enable(LLTexUnit::TT_TEXTURE);
 		gGL.matrixMode(LLRender::MM_TEXTURE);
 		gGL.loadIdentity();
 		gGL.matrixMode(LLRender::MM_MODELVIEW);
-		
+
 	}
 
 	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
@@ -458,7 +451,7 @@ void LLDrawPoolWater::renderReflection(LLFace* face)
 	{
 		return;
 	}
-	
+
 	S8 dr = voskyp->getDrawRefl();
 	if (dr < 0)
 	{
@@ -504,15 +497,15 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
     shader->uniform4fv(LLShaderMgr::SPECULAR_COLOR, 1, specular.mV);
 
 	sTime = (F32)LLFrameTimer::getElapsedSeconds() * 0.5f;
-	
+
 	S32 reftex = shader->enableTexture(LLShaderMgr::WATER_REFTEX);
-		
+
 	if (reftex > -1)
 	{
 		gGL.getTexUnit(reftex)->activate();
 		gGL.getTexUnit(reftex)->bind(&gPipeline.mWaterRef);
 		gGL.getTexUnit(0)->activate();
-	}	
+	}
 
 	//bind normal map
 	S32 bumpTex  = shader->enableTexture(LLViewerShaderMgr::BUMP_MAP);
@@ -524,7 +517,7 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
     // <FS:Ansariel> Factor out instance() calls
     //F32 blend_factor = LLEnvironment::instance().getCurrentWater()->getBlendFactor();
     F32 blend_factor = pwater->getBlendFactor();
-	
+
     gGL.getTexUnit(bumpTex)->unbind(LLTexUnit::TT_TEXTURE);
     gGL.getTexUnit(bumpTex2)->unbind(LLTexUnit::TT_TEXTURE);
 
@@ -543,15 +536,15 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
         gGL.getTexUnit(bumpTex)->bind(tex_a);
         gGL.getTexUnit(bumpTex2)->bind(tex_b);
     }
-	
+
     // bind reflection texture from RenderTarget
 	S32 screentex = shader->enableTexture(LLShaderMgr::WATER_SCREENTEX);
-	F32 screenRes[] = 
+	F32 screenRes[] =
 	{
 		1.f/gGLViewport[2],
 		1.f/gGLViewport[3]
 	};
-		
+
 	S32 diffTex = shader->enableTexture(LLShaderMgr::DIFFUSE_MAP);
 	stop_glerror();
 
@@ -567,7 +560,7 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
 		shader->uniform1f(LLShaderMgr::WATER_FOGDENSITY, fog_density);
 		gGL.getTexUnit(screentex)->bind(&gPipeline.mWaterDis);
 	}
-    
+
     if (mShaderLevel == 1)
     {
         //F32 fog_density_slider_value = param_mgr->mDensitySliderValue;
@@ -586,7 +579,7 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
     if (environment.isCloudScrollPaused()) // <FS:Ansariel> Factor out instance() calls
     {
         static const std::array<F32, 2> zerowave{ {0.0f, 0.0f} };
-        
+
         shader->uniform2fv(LLShaderMgr::WATER_WAVE_DIR1, 1, zerowave.data());
         shader->uniform2fv(LLShaderMgr::WATER_WAVE_DIR2, 1, zerowave.data());
     }
@@ -624,7 +617,7 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
 		shader->uniform1f(LLShaderMgr::WATER_REFSCALE, pwater->getScaleAbove());
 	}
 
-	{		
+	{
 		LLGLDisable cullface(GL_CULL_FACE);
 
         if (edge)
@@ -678,7 +671,7 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
     gGL.getTexUnit(bumpTex2)->unbind(LLTexUnit::TT_TEXTURE);
 
 	shader->disableTexture(LLShaderMgr::ENVIRONMENT_MAP, LLTexUnit::TT_CUBE_MAP);
-	shader->disableTexture(LLShaderMgr::WATER_SCREENTEX);	
+	shader->disableTexture(LLShaderMgr::WATER_SCREENTEX);
 	shader->disableTexture(LLShaderMgr::BUMP_MAP);
 	shader->disableTexture(LLShaderMgr::DIFFUSE_MAP);
 	shader->disableTexture(LLShaderMgr::WATER_REFTEX);
@@ -696,7 +689,7 @@ void LLDrawPoolWater::shade()
 
 	LLVOSky *voskyp = gSky.mVOSkyp;
 
-	if(voskyp == NULL) 
+	if(voskyp == NULL)
 	{
 		return;
 	}
@@ -724,8 +717,8 @@ void LLDrawPoolWater::shade()
     // moonlight is several orders of magnitude less bright than sunlight,
     // so only use this color when the moon alone is showing
     else if (moon_up)
-    {        
-        light_diffuse += psky->getMoonDiffuse(); 
+    {
+        light_diffuse += psky->getMoonDiffuse();
     }
 
     light_exp = light_dir * LLVector3(light_dir.mV[0], light_dir.mV[1], 0.f);
@@ -746,7 +739,7 @@ void LLDrawPoolWater::shade()
     LLGLSLShader* edge_shader = nullptr;
 
 	F32 eyedepth = LLViewerCamera::getInstance()->getOrigin().mV[2] - environment.getWaterHeight(); // <FS:Ansariel> Factor out instance() calls
-	
+
 	if (eyedepth < 0.f && LLPipeline::sWaterReflections)
 	{
 	    if (deferred_render)
@@ -778,7 +771,7 @@ void LLDrawPoolWater::shade()
 	    {
 		    mWaterNormp[0]->setFilteringOption(LLTexUnit::TFO_ANISOTROPIC);
 	    }
-	    else 
+	    else
 	    {
 		    mWaterNormp[0]->setFilteringOption(LLTexUnit::TFO_POINT);
 	    }
@@ -793,7 +786,7 @@ void LLDrawPoolWater::shade()
 	    {
             mWaterNormp[1]->setFilteringOption(LLTexUnit::TFO_ANISOTROPIC);
 	    }
-	    else 
+	    else
 	    {
             mWaterNormp[1]->setFilteringOption(LLTexUnit::TFO_POINT);
 	    }

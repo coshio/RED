@@ -231,7 +231,6 @@ public:
 	bool		canUseVertexShaders();
 	bool		canUseWindLightShaders() const;
 	bool		canUseWindLightShadersOnObjects() const;
-	bool		canUseAntiAliasing() const;
 
 	// phases
 	void resetFrameStats();

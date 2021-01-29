@@ -553,7 +553,7 @@ void LLPipeline::init()
 
 	if (mCubeVB.isNull())
 	{
-		mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW_ARB);
+		mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW);
 	}
 
 	// <FS:Ansariel> Reset VB during TP
@@ -759,11 +759,8 @@ void LLPipeline::destroyGL()
 	stop_glerror();
 	unloadShaders();
 	mHighlightFaces.clear();
-
 	resetDrawOrders();
-
 	resetVertexBuffers();
-
 	releaseGLBuffers();
 
 	if (LLVertexBuffer::sEnableVBOs)
@@ -1009,15 +1006,6 @@ bool LLPipeline::allocateScreenBuffer(U32 resX, U32 resY, U32 samples)
 		if (!addDeferredAttachments(mDeferredScreen)) return false;
 
 		GLuint screenFormat = GL_RGBA16;
-		if (gGLManager.mIsATI)
-		{
-			screenFormat = GL_RGBA12;
-		}
-
-		if (gGLManager.mGLVersion < 4.f && gGLManager.mIsNVIDIA)
-		{
-			screenFormat = GL_RGBA16F_ARB;
-		}
 
 		if (!mScreen.allocate(resX, resY, screenFormat, FALSE, FALSE, LLTexUnit::TT_RECT_TEXTURE, FALSE, samples)) return false;
 		if (samples > 0)
@@ -1411,7 +1399,7 @@ void LLPipeline::createGLBuffers()
 			LLImageGL::generateTextures(1, &mNoiseMap);
 
 			gGL.getTexUnit(0)->bindManual(LLTexUnit::TT_TEXTURE, mNoiseMap);
-			LLImageGL::setManualImage(LLTexUnit::getInternalType(LLTexUnit::TT_TEXTURE), 0, GL_RGB16F_ARB, noiseRes, noiseRes, GL_RGB, GL_FLOAT, noise, false);
+			LLImageGL::setManualImage(LLTexUnit::getInternalType(LLTexUnit::TT_TEXTURE), 0, GL_RGB16F, noiseRes, noiseRes, GL_RGB, GL_FLOAT, noise, false);
 			gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_POINT);
 		}
 
@@ -1426,7 +1414,7 @@ void LLPipeline::createGLBuffers()
 
 			LLImageGL::generateTextures(1, &mTrueNoiseMap);
 			gGL.getTexUnit(0)->bindManual(LLTexUnit::TT_TEXTURE, mTrueNoiseMap);
-			LLImageGL::setManualImage(LLTexUnit::getInternalType(LLTexUnit::TT_TEXTURE), 0, GL_RGB16F_ARB, noiseRes, noiseRes, GL_RGB,GL_FLOAT, noise, false);
+			LLImageGL::setManualImage(LLTexUnit::getInternalType(LLTexUnit::TT_TEXTURE), 0, GL_RGB16F, noiseRes, noiseRes, GL_RGB,GL_FLOAT, noise, false);
 			gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_POINT);
 		}
 
@@ -1441,12 +1429,8 @@ F32 lerpf(F32 a, F32 b, F32 w)
 	return a + w * (b - a);
 }
 
-void LLPipeline::createLUTBuffers()
-{
-	if (sRenderDeferred)
-	{
-		if (!mLightFunc)
-		{
+void LLPipeline::createLUTBuffers(){
+	if (!mLightFunc){
 			U32 lightResX = gSavedSettings.getU32("RenderSpecularResX");
 			U32 lightResY = gSavedSettings.getU32("RenderSpecularResY");
 			F32* ls = new F32[lightResX*lightResY];
@@ -1491,7 +1475,6 @@ void LLPipeline::createLUTBuffers()
 
 			delete [] ls;
 		}
-	}
 }
 
 
@@ -1545,10 +1528,7 @@ bool LLPipeline::canUseWindLightShadersOnObjects() const
 		&& LLViewerShaderMgr::instance()->getShaderLevel(LLViewerShaderMgr::SHADER_OBJECT) > 0);
 }
 
-bool LLPipeline::canUseAntiAliasing() const
-{
-	return true;
-}
+
 
 void LLPipeline::unloadShaders()
 {
@@ -1673,11 +1653,11 @@ LLDrawPool *LLPipeline::findPool(const U32 type, LLViewerTexture *tex0)
 		break;
 
 	case LLDrawPool::POOL_TREE:
-		poolp = get_if_there(mTreePools, (uintptr_t)tex0, (LLDrawPool*)0 );
+		poolp = get_if_there(mTreePools, (uintptr_t)tex0, (LLDrawPool*)NULL);
 		break;
 
 	case LLDrawPool::POOL_TERRAIN:
-		poolp = get_if_there(mTerrainPools, (uintptr_t)tex0, (LLDrawPool*)0 );
+		poolp = get_if_there(mTerrainPools, (uintptr_t)tex0, (LLDrawPool*)NULL);
 		break;
 
 	case LLDrawPool::POOL_BUMP:
@@ -1913,17 +1893,8 @@ void LLPipeline::removeMutedAVsLights(LLVOAvatar* muted_avatar)
 	}
 }
 
-U32 LLPipeline::addObject(LLViewerObject *vobj)
-{
-	if (RenderDelayCreation)
-	{
-		mCreateQ.push_back(vobj);
-	}
-	else
-	{
-		createObject(vobj);
-	}
-
+U32 LLPipeline::addObject(LLViewerObject *vobj){
+	createObject(vobj);
 	return 1;
 }
 
@@ -2533,7 +2504,7 @@ void LLPipeline::updateCull(LLCamera& camera, LLCullResult& result, S32 water_cl
 	{
 		if (mCubeVB.isNull())
 		{ //cube VB will be used for issuing occlusion queries
-			mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW_ARB);
+			mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW);
 		}
 		mCubeVB->setBuffer(LLVertexBuffer::MAP_VERTEX);
 	}
@@ -2805,7 +2776,7 @@ void LLPipeline::doOcclusion(LLCamera& camera)
 
 		if (mCubeVB.isNull())
 		{ //cube VB will be used for issuing occlusion queries
-			mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW_ARB);
+			mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW);
 		}
 		mCubeVB->setBuffer(LLVertexBuffer::MAP_VERTEX);
 
@@ -4019,34 +3990,13 @@ void LLPipeline::postSort(LLCamera& camera)
 		LL_WARNS_ONCE() << "Missing particle buffer" << LL_ENDL;
 	}
 
-	/*bool use_transform_feedback = gTransformPositionProgram.mProgramObject && !mMeshDirtyGroup.empty();
-
-	if (use_transform_feedback)
-	{ //place a query around potential transform feedback code for synchronization
-		mTransformFeedbackPrimitives = 0;
-
-		if (!mMeshDirtyQueryObject)
-		{
-			glGenQueriesARB(1, &mMeshDirtyQueryObject);
-		}
-
-
-		glBeginQueryARB(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, mMeshDirtyQueryObject);
-	}*/
-
 	//pack vertex buffers for groups that chose to delay their updates
 	for (LLSpatialGroup::sg_vector_t::iterator iter = mMeshDirtyGroup.begin(); iter != mMeshDirtyGroup.end(); ++iter)
 	{
 		(*iter)->rebuildMesh();
 	}
 
-	/*if (use_transform_feedback)
-	{
-		glEndQueryARB(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-	}*/
-
 	mMeshDirtyGroup.clear();
-
 	if (!sShadowRender)
 	{
 		std::sort(sCull->beginAlphaGroups(), sCull->endAlphaGroups(), LLSpatialGroup::CompareDepthGreater());
@@ -4146,26 +4096,19 @@ void LLPipeline::postSort(LLCamera& camera)
 }
 
 
-void render_hud_elements()
-{
+void render_hud_elements(){
 	gPipeline.disableLights();
-
 	LLGLDisable fog(GL_FOG);
 	LLGLSUIDefault gls_ui;
-
 	LLGLEnable stencil(GL_STENCIL_TEST);
 	glStencilFunc(GL_ALWAYS, 255, 0xFFFFFFFF);
 	glStencilMask(0xFFFFFFFF);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-
 	gGL.color4f(1,1,1,1);
 	gUIProgram.bind();
-
 	LLGLDepthTest depth(GL_TRUE, GL_FALSE);
-
-	if (!LLPipeline::sReflectionRender && gPipeline.hasRenderDebugFeatureMask(LLPipeline::RENDER_DEBUG_FEATURE_UI))
-	{
-		LLGLEnable multisample(LLPipeline::RenderFSAASamples > 0 ? GL_MULTISAMPLE_ARB : 0);
+	if (!LLPipeline::sReflectionRender && gPipeline.hasRenderDebugFeatureMask(LLPipeline::RENDER_DEBUG_FEATURE_UI)){
+		LLGLEnable multisample(LLPipeline::RenderFSAASamples > 0 ? GL_MULTISAMPLE : 0);
 		gViewerWindow->renderSelections(FALSE, FALSE, FALSE); // For HUD version in render_ui_3d()
 
 		// Draw the tracking overlays
@@ -4179,17 +4122,14 @@ void render_hud_elements()
 		// Render name tags.
 		LLHUDObject::renderAll();
 	}
-	else if (gForceRenderLandFence)
-	{
+	else if (gForceRenderLandFence){
 		// This is only set when not rendering the UI, for parcel snapshots
 		LLViewerParcelMgr::getInstance()->render();
 	}
-	else if (gPipeline.hasRenderType(LLPipeline::RENDER_TYPE_HUD))
-	{
+	else if (gPipeline.hasRenderType(LLPipeline::RENDER_TYPE_HUD)){
 		LLHUDText::renderAllHUD();
 	}
 	gUIProgram.unbind();
-
 	gGL.flush();
 }
 
@@ -4470,7 +4410,7 @@ void LLPipeline::renderGeom(LLCamera& camera, bool forceVBOUpdate)
 	gGL.matrixMode(LLRender::MM_MODELVIEW);
 
 	LLGLSPipeline gls_pipeline;
-	LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE_ARB : 0);
+	LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE : 0);
 
 	LLGLState gls_color_material(GL_COLOR_MATERIAL, mLightingDetail < 2);
 
@@ -4671,26 +4611,19 @@ void LLPipeline::renderGeom(LLCamera& camera, bool forceVBOUpdate)
 //	LLGLState::checkClientArrays();
 }
 
-void LLPipeline::renderGeomDeferred(LLCamera& camera)
-{
+void LLPipeline::renderGeomDeferred(LLCamera& camera){
 	LLAppViewer::instance()->pingMainloopTimeout("Pipeline:RenderGeomDeferred");
-
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_GEOMETRY);
-
 	LL_RECORD_BLOCK_TIME(FTM_DEFERRED_POOLS);
-
 	LLGLEnable cull(GL_CULL_FACE);
-
-	for (pool_set_t::iterator iter = mPools.begin(); iter != mPools.end(); ++iter)
-	{
+	for (pool_set_t::iterator iter = mPools.begin(); iter != mPools.end(); ++iter){
 		LLDrawPool *poolp = *iter;
-		if (hasRenderType(poolp->getType()))
-		{
+		if (hasRenderType(poolp->getType())){
 			poolp->prerender();
 		}
 	}
 
-	LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE_ARB : 0);
+	LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE : 0);
 
 	LLVertexBuffer::unbind();
 
@@ -4764,14 +4697,13 @@ void LLPipeline::renderGeomDeferred(LLCamera& camera)
 	gGL.setColorMask(true, false);
 }
 
-void LLPipeline::renderGeomPostDeferred(LLCamera& camera, bool do_occlusion)
-{
+void LLPipeline::renderGeomPostDeferred(LLCamera& camera, bool do_occlusion){
 	LL_RECORD_BLOCK_TIME(FTM_POST_DEFERRED_POOLS);
 	U32 cur_type = 0;
 
 	LLGLEnable cull(GL_CULL_FACE);
 
-	LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE_ARB : 0);
+	LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE : 0);
 
 	calcNearbyLights(camera);
 	setupHWLights(NULL);
@@ -8151,7 +8083,7 @@ void LLPipeline::renderFinalize()
         gGL.getTexUnit(0)->bind(&mGlow[1]);
         gGL.getTexUnit(1)->bind(&mScreen);
 
-        LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE_ARB : 0);
+        LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE : 0);
 
         buff->setBuffer(mask);
         buff->drawArrays(LLRender::TRIANGLE_STRIP, 0, 3);
@@ -8239,7 +8171,7 @@ void LLPipeline::bindDeferredShader(LLGLSLShader& shader, LLRenderTarget* light_
     channel = shader.enableTexture(LLShaderMgr::DEFERRED_NORMAL, deferred_target->getUsage());
 	if (channel > -1)
 	{
-        deferred_target->bindTexture(2, channel, LLTexUnit::TFO_POINT);
+    deferred_target->bindTexture(2, channel, LLTexUnit::TFO_POINT);
 	}
 
     channel = shader.enableTexture(LLShaderMgr::DEFERRED_DEPTH, deferred_depth_target->getUsage());
@@ -8315,8 +8247,8 @@ void LLPipeline::bindDeferredShader(LLGLSLShader& shader, LLRenderTarget* light_
 			gGL.getTexUnit(channel)->setTextureAddressMode(LLTexUnit::TAM_CLAMP);
 			stop_glerror();
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 			stop_glerror();
 		}
 	}
@@ -8337,8 +8269,8 @@ void LLPipeline::bindDeferredShader(LLGLSLShader& shader, LLRenderTarget* light_
 			gGL.getTexUnit(channel)->setTextureAddressMode(LLTexUnit::TAM_CLAMP);
 			stop_glerror();
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 			stop_glerror();
 		}
 	}
@@ -8518,7 +8450,7 @@ void LLPipeline::renderDeferredLighting(LLRenderTarget *screen_target)
                                                 GL_NEAREST);
         }
 
-        LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE_ARB : 0);
+        LLGLEnable multisample(RenderFSAASamples > 0 ? GL_MULTISAMPLE : 0);
 
         if (gPipeline.hasRenderType(LLPipeline::RENDER_TYPE_HUD))
         {
@@ -8761,7 +8693,7 @@ void LLPipeline::renderDeferredLighting(LLRenderTarget *screen_target)
 
                 if (mCubeVB.isNull())
                 {
-                    mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW_ARB);
+                    mCubeVB = ll_create_cube_vb(LLVertexBuffer::MAP_VERTEX, GL_STATIC_DRAW);
                 }
 
                 mCubeVB->setBuffer(LLVertexBuffer::MAP_VERTEX);
@@ -9269,7 +9201,7 @@ void LLPipeline::unbindDeferredShader(LLGLSLShader &shader)
 	{
 		if (shader.disableTexture(LLShaderMgr::DEFERRED_SHADOW0+i) > -1)
 		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_NONE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 		}
 	}
 
@@ -9277,7 +9209,7 @@ void LLPipeline::unbindDeferredShader(LLGLSLShader &shader)
 	{
 		if (shader.disableTexture(LLShaderMgr::DEFERRED_SHADOW0+i) > -1)
 		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_NONE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 		}
 	}
 

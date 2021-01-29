@@ -2199,16 +2199,9 @@ void LLFloaterPreference::refreshEnabledState()
 		
 		// Enable or disable the control, the "Antialiasing:" label and the restart warning
 		// based on code support for the feature on the current hardware.
+		fsaa_ctrl->setEnabled(TRUE);
 
-		if (gPipeline.canUseAntiAliasing())
-		{
-			fsaa_ctrl->setEnabled(TRUE);
-		}
-		else
-		{
-			fsaa_ctrl->setEnabled(FALSE);
-			fsaa_ctrl->setValue((LLSD::Integer) 0);
-		}
+
 	}
 
 	LLComboBox* ctrl_reflections = getChild<LLComboBox>("Reflections");

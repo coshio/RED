@@ -25,10 +25,10 @@
 
 #ifdef _WIN32 /* supports windows, x -- need to generalize */
 #  include <GL/wglext.h>
-#  define GLH_EXT_GET_PROC_ADDRESS(p)   wglGetProcAddress(p) 
+#  define GLH_EXT_GET_PROC_ADDRESS(p)   wglGetProcAddress(p)
 #else if GLX_VERSION_1_3
 #  include <GL/glxext.h>
-#  define GLH_EXT_GET_PROC_ADDRESS(p)   glXGetProcAddressARB(p) 
+#  define GLH_EXT_GET_PROC_ADDRESS(p)   glXGetProcAddressARB(p)
 #endif
 
 #ifdef GLH_EXT_SINGLE_FILE
