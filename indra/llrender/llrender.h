@@ -197,7 +197,6 @@ public:
 	// make sure you want to permanently change the filtering for the bound texture.
 	void setTextureFilteringOption(LLTexUnit::eTextureFilterOptions option);
 
-	void setTextureBlendType(eTextureBlendType type);
 
 	inline void setTextureColorBlend(eTextureBlendOp op, eTextureBlendSrc src1, eTextureBlendSrc src2 = TBS_PREV_COLOR)
 	{}

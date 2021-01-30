@@ -11,19 +11,15 @@
   <component name="ChangeListManager">
     <list default="true" id="8683bfdc-ae70-42a0-8d1d-46e7b29b994c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llrender/llgl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llgl.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llrender/llgl.h" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llgl.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llrender/llpostprocess.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llpostprocess.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llappearance/lltexlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llappearance/lltexlayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llrender/llrender.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llrender.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llwindow/GL/glh_genext.h" beforeDir="false" afterPath="$PROJECT_DIR$/llwindow/GL/glh_genext.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llrender/llrender.h" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llrender.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newview/lldrawpoolterrain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/lldrawpoolterrain.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newview/lldrawpoolwater.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/lldrawpoolwater.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newview/llfloaterpreference.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llfloaterpreference.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newview/pipeline.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/pipeline.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newview/pipeline.h" beforeDir="false" afterPath="$PROJECT_DIR$/newview/pipeline.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llhudnametag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llhudnametag.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llhudtext.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llhudtext.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llviewerdisplay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llviewerdisplay.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/llviewerjointmesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newview/llviewerjointmesh.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,12 +32,12 @@
     <session id="-255224454">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.4" value="2" />
-          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.62" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -72,8 +68,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/newview/llviewershadermgr.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="728" column="5" lean-forward="true" selection-start-line="728" selection-start-column="5" selection-end-line="728" selection-end-column="5" />
+            <state relative-caret-position="282">
+              <caret line="722" column="30" lean-forward="true" selection-start-line="722" selection-start-column="30" selection-end-line="722" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -82,10 +78,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>gGL.getTexUnit(0)</find>
-      <find>fixedfunction</find>
-      <find>LLGLSLShader::sNoFixedFunction</find>
-      <find>use_shaders</find>
       <find>sNoFixedFunction</find>
       <find>return;</find>
       <find>hardware</find>
@@ -112,6 +104,10 @@
       <find>GL_ARB_multitexture</find>
       <find>LLDX</find>
       <find>mHasTextureMultisample</find>
+      <find>GL_SAMPLER_</find>
+      <find>TT_RECT_TEXTURE</find>
+      <find>setTextureBlendType</find>
+      <find>destroyVB</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Artemis\Desktop\SecondLifeVanillaDev\PullerDevFirestorm\RED\indra</dir>
@@ -196,18 +192,18 @@
       <workItem from="1611606963731" duration="18724000" />
       <workItem from="1611679276378" duration="1758000" />
       <workItem from="1611684083890" duration="943000" />
-      <workItem from="1611824513673" duration="12388000" />
+      <workItem from="1611824513673" duration="16194000" />
+      <workItem from="1611977006311" duration="1948000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37362000" />
+    <option name="totallyTimeSpent" value="43116000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="13" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15884861" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16044776" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -221,7 +217,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="CMake" order="11" visible="true" weight="0.31759655" />
+      <window_info active="true" anchor="bottom" id="CMake" order="11" visible="true" weight="0.31759655" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -286,8 +282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/newview/llviewershadermgr.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="728" column="5" lean-forward="true" selection-start-line="728" selection-start-column="5" selection-end-line="728" selection-end-column="5" />
+        <state relative-caret-position="282">
+          <caret line="722" column="30" lean-forward="true" selection-start-line="722" selection-start-column="30" selection-end-line="722" selection-end-column="30" />
         </state>
       </provider>
     </entry>

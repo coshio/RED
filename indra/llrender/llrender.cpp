@@ -146,7 +146,7 @@ void LLTexUnit::activate(void){
 
 void LLTexUnit::enable(eTextureType type){
 	if (mIndex < 0) return;
-	if ( (mCurrTexType != type || gGL.mDirty) && (type != TT_NONE) ){
+	else if ( (mCurrTexType != type || gGL.mDirty) && (type != TT_NONE) ){
 		activate();
 		if (mCurrTexType != TT_NONE && !gGL.mDirty){
 			disable(); // Force a disable of a previous texture type if it's enabled.
@@ -158,7 +158,7 @@ void LLTexUnit::enable(eTextureType type){
 
 void LLTexUnit::disable(void){
 	if (mIndex < 0) return;
-	if (mCurrTexType != TT_NONE){
+	else if (mCurrTexType != TT_NONE){
 		activate();
 		unbind(mCurrTexType);
 		gGL.flush();
@@ -230,17 +230,17 @@ bool LLTexUnit::bind(LLTexture* texture, bool for_rendering, bool forceBind)
 
 bool LLTexUnit::bind(LLImageGL* texture, bool for_rendering, bool forceBind){
 	if (mIndex < 0) return false;
-	if(!texture){
+	else if(!texture){
 		LL_DEBUGS() << "NULL LLTexUnit::bind texture" << LL_ENDL;
 		return false;
 	}
-	if(!texture->getTexName()){
+	else if(!texture->getTexName()){
 		if(LLImageGL::sDefaultGLTexture && LLImageGL::sDefaultGLTexture->getTexName()){
 			return bind(LLImageGL::sDefaultGLTexture) ;
 		}
 		return false ;
 	}
-	if ((mCurrTexture != texture->getTexName()) || forceBind){
+	else if ((mCurrTexture != texture->getTexName()) || forceBind){
 		gGL.flush();
 		activate();
 		enable(texture->getTarget());
@@ -258,8 +258,7 @@ bool LLTexUnit::bind(LLImageGL* texture, bool for_rendering, bool forceBind){
 	return true;
 }
 
-bool LLTexUnit::bind(LLCubeMap* cubeMap)
-{
+bool LLTexUnit::bind(LLCubeMap* cubeMap){
 	if (mIndex < 0) return false;
 
 	gGL.flush();
@@ -299,8 +298,7 @@ bool LLTexUnit::bind(LLCubeMap* cubeMap)
 }
 
 // LLRenderTarget is unavailible on the mapserver since it uses FBOs.
-bool LLTexUnit::bind(LLRenderTarget* renderTarget, bool bindDepth)
-{
+bool LLTexUnit::bind(LLRenderTarget* renderTarget, bool bindDepth){
 	if (mIndex < 0) return false;
 
 	gGL.flush();
@@ -322,23 +320,18 @@ bool LLTexUnit::bind(LLRenderTarget* renderTarget, bool bindDepth)
 	return true;
 }
 
-bool LLTexUnit::bindManual(eTextureType type, U32 texture, bool hasMips)
-{
-	if (mIndex < 0)
-	{
+bool LLTexUnit::bindManual(eTextureType type, U32 texture, bool hasMips){
+	if (mIndex < 0){
 		return false;
 	}
-
-	if(mCurrTexture != texture)
-	{
+	else if(mCurrTexture != texture){
 		gGL.flush();
-
 		activate();
 		enable(type);
 		mCurrTexture = texture;
 		glBindTexture(sGLTextureType[type], texture);
-        mHasMipMaps = hasMips;
-        setTextureColorSpace(mTexColorSpace);
+    mHasMipMaps = hasMips;
+    setTextureColorSpace(mTexColorSpace);
 	}
 	return true;
 }
@@ -415,8 +408,8 @@ void LLTexUnit::setTextureFilteringOption(LLTexUnit::eTextureFilterOptions optio
 			glTexParameteri(sGLTextureType[mCurrTexType], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 	}
-	else
-	{
+	else{
+	//TODO: Figure out if we can eliminate the else here and remove one less check
 		if (mHasMipMaps)
 		{
 			glTexParameteri(sGLTextureType[mCurrTexType], GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
@@ -447,10 +440,7 @@ void LLTexUnit::setTextureFilteringOption(LLTexUnit::eTextureFilterOptions optio
 	}
 }
 //------------------------------------------------------------------------------
-void LLTexUnit::setTextureBlendType(eTextureBlendType type){
-	//texture blend type means nothing when using shaders
-	return;
-}
+
 //------------------------------------------------------------------------------
 GLint LLTexUnit::getTextureSource(eTextureBlendSrc src)
 {
@@ -814,16 +804,13 @@ void LLRender::init()
 
 void LLRender::shutdown()
 {
-	for (U32 i = 0; i < mTexUnits.size(); i++)
-	{
+	for (U32 i = 0; i < mTexUnits.size(); i++){
 		delete mTexUnits[i];
 	}
 	mTexUnits.clear();
 	delete mDummyTexUnit;
 	mDummyTexUnit = NULL;
-
-	for (U32 i = 0; i < mLightState.size(); ++i)
-	{
+	for (U32 i = 0; i < mLightState.size(); ++i){
 		delete mLightState[i];
 	}
 	mLightState.clear();
@@ -854,37 +841,24 @@ void LLRender::destroyVB()
 // </FS:Ansariel>
 
 
-void LLRender::refreshState(void)
-{
+void LLRender::refreshState(void){
 	mDirty = true;
-
 	U32 active_unit = mCurrTextureUnitIndex;
-
-	for (U32 i = 0; i < mTexUnits.size(); i++)
-	{
+	for (U32 i = 0; i < mTexUnits.size(); i++){
 		mTexUnits[i]->refreshState();
 	}
-
 	mTexUnits[active_unit]->activate();
-
 	setColorMask(mCurrColorMask[0], mCurrColorMask[1], mCurrColorMask[2], mCurrColorMask[3]);
-
 	setAlphaRejectSettings(mCurrAlphaFunc, mCurrAlphaFuncVal);
-
 	mDirty = false;
 }
 
-void LLRender::syncLightState()
-{
+void LLRender::syncLightState(){
     LLGLSLShader *shader = LLGLSLShader::sCurBoundShaderPtr;
-
-    if (!shader)
-    {
+    if (!shader){
         return;
     }
-
-    if (shader->mLightHash != mLightHash)
-    {
+    else if (shader->mLightHash != mLightHash){
         shader->mLightHash = mLightHash;
 
         LLVector4 position[LL_NUM_LIGHT_UNITS];
@@ -918,10 +892,7 @@ void LLRender::syncLightState()
     }
 }
 
-void LLRender::syncMatrices()
-{
-
-
+void LLRender::syncMatrices(){
 	static const U32 name[] =
 	{
 		LLShaderMgr::MODELVIEW_MATRIX,
