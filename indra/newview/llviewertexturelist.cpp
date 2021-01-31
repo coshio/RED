@@ -1362,18 +1362,6 @@ S32Megabytes LLViewerTextureList::getMaxVideoRamSetting(bool get_recommended, fl
 		//  - it's going to be swapping constantly regardless
 		S32Megabytes max_vram(gGLManager.mVRAM);
 
-		if(gGLManager.mIsATI)
-		{
-			//shrink the availabe vram for ATI cards because some of them do not handel texture swapping well.
-			//<FS:TS> Add debug to not shrink
-			//max_vram = max_vram * 0.75f; 
-			if (!gSavedSettings.getBOOL("FSATIFullTextureMem"))
-			{  
-				max_vram = max_vram * 0.75f; 
-			}
-			//</FS:TS>
-		}
-
 		max_vram = llmax(max_vram, getMinVideoRamSetting());
 		max_texmem = max_vram;
 		if (!get_recommended)
@@ -1475,10 +1463,9 @@ void LLViewerTextureList::updateMaxResidentTexMem(S32Megabytes mem)
 	//	VBO pools. Don't back it out a second time.
 	//mMaxResidentTexMemInMegaBytes = (vb_mem - fb_mem) ; //in MB
 	mMaxResidentTexMemInMegaBytes = vb_mem; //in MB
-	if(!gGLManager.mIsATI)
-	{
-		mMaxResidentTexMemInMegaBytes -= fb_mem; //in MB
-	}
+
+	mMaxResidentTexMemInMegaBytes -= fb_mem; //in MB
+
 	//</FS:TS>
 	
 // <FS:Ansariel> Texture memory management
@@ -1528,7 +1515,7 @@ void LLViewerTextureList::updateMaxResidentTexMem(S32Megabytes mem)
 bool LLViewerTextureList::canUseDynamicTextureMemory()
 {
 #if ADDRESS_SIZE == 64
-	return (gGLManager.mHasATIMemInfo || gGLManager.mHasNVXMemInfo) && gGLManager.mVRAM >= 512;
+	return gGLManager.mHasNVXMemInfo && gGLManager.mVRAM >= 512;
 #else
 	return false;
 #endif

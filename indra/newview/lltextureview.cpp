@@ -537,22 +537,7 @@ S32Megabytes LLGLTexMemBar::getGPUMemoryUsed()
         return gpu_res;
     }
     timer.reset();
-
-    if (gGLManager.mHasATIMemInfo)
-    {
-        S32 meminfo[4];
-        glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, meminfo);
-        S32Megabytes free = S32Megabytes(meminfo[0]);
-
-        //glGetIntegerv(GL_VBO_FREE_MEMORY_ATI, meminfo);
-        //S32Megabytes free = free + S32Megabytes(meminfo[0]);
-
-        //glGetIntegerv(GL_RENDERBUFFER_FREE_MEMORY_ATI, meminfo);
-        //S32Megabytes free = free + S32Megabytes(meminfo[0]);
-
-        gpu_res = S32Megabytes(gGLManager.mVRAM) - free;
-    }
-    else if (gGLManager.mHasNVXMemInfo)
+    if (gGLManager.mHasNVXMemInfo)
     {
         S32 free_memory;
         glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &free_memory);

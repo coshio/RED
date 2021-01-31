@@ -83,11 +83,11 @@ const U32 LL_VBO_POOL_SEED_COUNT = vbo_block_index(LL_VBO_POOL_MAX_SEED_SIZE);
 //============================================================================
 
 //static
-LLVBOPool LLVertexBuffer::sStreamVBOPool(GL_STREAM_DRAW_ARB, GL_ARRAY_BUFFER_ARB);
-LLVBOPool LLVertexBuffer::sDynamicVBOPool(GL_DYNAMIC_DRAW_ARB, GL_ARRAY_BUFFER_ARB);
+LLVBOPool LLVertexBuffer::sStreamVBOPool(GL_STREAM_DRAW, GL_ARRAY_BUFFER_ARB);
+LLVBOPool LLVertexBuffer::sDynamicVBOPool(GL_DYNAMIC_DRAW, GL_ARRAY_BUFFER_ARB);
 LLVBOPool LLVertexBuffer::sDynamicCopyVBOPool(GL_DYNAMIC_COPY_ARB, GL_ARRAY_BUFFER_ARB);
-LLVBOPool LLVertexBuffer::sStreamIBOPool(GL_STREAM_DRAW_ARB, GL_ELEMENT_ARRAY_BUFFER_ARB);
-LLVBOPool LLVertexBuffer::sDynamicIBOPool(GL_DYNAMIC_DRAW_ARB, GL_ELEMENT_ARRAY_BUFFER_ARB);
+LLVBOPool LLVertexBuffer::sStreamIBOPool(GL_STREAM_DRAW, GL_ELEMENT_ARRAY_BUFFER_ARB);
+LLVBOPool LLVertexBuffer::sDynamicIBOPool(GL_DYNAMIC_DRAW, GL_ELEMENT_ARRAY_BUFFER_ARB);
 
 U32 LLVBOPool::sBytesPooled = 0;
 U32 LLVBOPool::sIndexBytesPooled = 0;
@@ -185,7 +185,7 @@ volatile U8* LLVBOPool::allocate(U32& name, U32 size, bool for_seed)
 			LLVertexBuffer::sAllocatedIndexBytes += size;
 		}
 
-		if (LLVertexBuffer::sDisableVBOMapping || mUsage != GL_DYNAMIC_DRAW_ARB)
+		if (LLVertexBuffer::sDisableVBOMapping || mUsage != GL_DYNAMIC_DRAW)
 		{
 			glBufferDataARB(mType, size, 0, mUsage);
 			if (mUsage != GL_DYNAMIC_COPY_ARB)
@@ -969,32 +969,32 @@ S32 LLVertexBuffer::determineUsage(S32 usage)
 		ret_usage = 0;
 	}
 
-	if (ret_usage == GL_STREAM_DRAW_ARB && !sUseStreamDraw)
+	if (ret_usage == GL_STREAM_DRAW && !sUseStreamDraw)
 	{
 		ret_usage = 0;
 	}
 
-	if (ret_usage == GL_DYNAMIC_DRAW_ARB && sPreferStreamDraw)
+	if (ret_usage == GL_DYNAMIC_DRAW && sPreferStreamDraw)
 	{
-		ret_usage = GL_STREAM_DRAW_ARB;
+		ret_usage = GL_STREAM_DRAW;
 	}
 
 	if (ret_usage == 0 && LLRender::sGLCoreProfile)
 	{ //MUST use VBOs for all rendering
-		ret_usage = GL_STREAM_DRAW_ARB;
+		ret_usage = GL_STREAM_DRAW;
 	}
 
-	if (ret_usage && ret_usage != GL_STREAM_DRAW_ARB)
+	if (ret_usage && ret_usage != GL_STREAM_DRAW)
 	{ //only stream_draw and dynamic_draw are supported when using VBOs, dynamic draw is the default
 		if (ret_usage != GL_DYNAMIC_COPY_ARB)
 		{
 		    if (sDisableVBOMapping)
 		    { //always use stream draw if VBO mapping is disabled
-			    ret_usage = GL_STREAM_DRAW_ARB;
+			    ret_usage = GL_STREAM_DRAW;
 		    }
 		    else
 		    {
-			    ret_usage = GL_DYNAMIC_DRAW_ARB;
+			    ret_usage = GL_DYNAMIC_DRAW;
 		    }
 	    }
 	}
@@ -1028,7 +1028,7 @@ LLVertexBuffer::LLVertexBuffer(U32 typemask, S32 usage)
 	mMappable(false),
 	mFence(NULL)
 {
-	mMappable = (mUsage == GL_DYNAMIC_DRAW_ARB && !sDisableVBOMapping);
+	mMappable = (mUsage == GL_DYNAMIC_DRAW && !sDisableVBOMapping);
 
 	//zero out offsets
 	for (U32 i = 0; i < TYPE_MAX; i++)
@@ -1153,11 +1153,11 @@ void LLVertexBuffer::genBuffer(U32 size)
 	mSize = vbo_block_size(size);
 	claimMem(mSize);
 
-	if (mUsage == GL_STREAM_DRAW_ARB)
+	if (mUsage == GL_STREAM_DRAW)
 	{
 		mMappedData = sStreamVBOPool.allocate(mGLBuffer, mSize);
 	}
-	else if (mUsage == GL_DYNAMIC_DRAW_ARB)
+	else if (mUsage == GL_DYNAMIC_DRAW)
 	{
 		mMappedData = sDynamicVBOPool.allocate(mGLBuffer, mSize);
 	}
@@ -1174,7 +1174,7 @@ void LLVertexBuffer::genIndices(U32 size)
 {
 	mIndicesSize = vbo_block_size(size);
 
-	if (mUsage == GL_STREAM_DRAW_ARB)
+	if (mUsage == GL_STREAM_DRAW)
 	{
 		mMappedIndexData = sStreamIBOPool.allocate(mGLIndices, mIndicesSize);
 	}
@@ -1188,7 +1188,7 @@ void LLVertexBuffer::genIndices(U32 size)
 
 void LLVertexBuffer::releaseBuffer()
 {
-	if (mUsage == GL_STREAM_DRAW_ARB)
+	if (mUsage == GL_STREAM_DRAW)
 	{
 		sStreamVBOPool.release(mGLBuffer, mMappedData, mSize);
 	}
@@ -1205,7 +1205,7 @@ void LLVertexBuffer::releaseBuffer()
 
 void LLVertexBuffer::releaseIndices()
 {
-	if (mUsage == GL_STREAM_DRAW_ARB)
+	if (mUsage == GL_STREAM_DRAW)
 	{
 		sStreamIBOPool.release(mGLIndices, mMappedIndexData, mIndicesSize);
 	}

@@ -537,23 +537,7 @@ public:
 				addText(xpos, ypos, "Shaders Disabled");
 				ypos += y_inc;
 			}
-
-			if (gGLManager.mHasATIMemInfo)
-			{
-				S32 meminfo[4];
-				glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, meminfo);
-
-				addText(xpos, ypos, llformat("%.2f MB Texture Memory Free", meminfo[0]/1024.f));
-				ypos += y_inc;
-
-				if (gGLManager.mHasVertexBufferObject)
-				{
-					glGetIntegerv(GL_VBO_FREE_MEMORY_ATI, meminfo);
-					addText(xpos, ypos, llformat("%.2f MB VBO Memory Free", meminfo[0]/1024.f));
-					ypos += y_inc;
-				}
-			}
-			else if (gGLManager.mHasNVXMemInfo)
+			if (gGLManager.mHasNVXMemInfo)
 			{
 				S32 free_memory;
 				glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &free_memory);

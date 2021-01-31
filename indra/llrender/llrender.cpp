@@ -57,11 +57,8 @@ static const U32 LL_NUM_LIGHT_UNITS = 8;
 
 static const GLenum sGLTextureType[] ={
 	GL_TEXTURE_2D,
-	// <FS:Ansariel> Replace GL_TEXTURE_RECTANGLE_ARB with GL_TEXTURE_RECTANGLE
-	//GL_TEXTURE_RECTANGLE_ARB,
 	GL_TEXTURE_RECTANGLE,
-	// </FS:Ansariel>
-	GL_TEXTURE_CUBE_MAP_ARB,
+	GL_TEXTURE_CUBE_MAP,
 	GL_TEXTURE_2D_MULTISAMPLE,
   GL_TEXTURE_3D
 };
@@ -276,7 +273,7 @@ bool LLTexUnit::bind(LLCubeMap* cubeMap){
 			activate();
 			enable(LLTexUnit::TT_CUBE_MAP);
             mCurrTexture = cubeMap->mImages[0]->getTexName();
-			glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, mCurrTexture);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, mCurrTexture);
 			mHasMipMaps = cubeMap->mImages[0]->mHasMipMaps;
 			cubeMap->mImages[0]->updateBindStats(cubeMap->mImages[0]->mTextureMemory);
 			if (cubeMap->mImages[0]->mTexOptionsDirty)
@@ -374,7 +371,7 @@ void LLTexUnit::setTextureAddressMode(eTextureAddressMode mode)
 	glTexParameteri (sGLTextureType[mCurrTexType], GL_TEXTURE_WRAP_T, sGLAddressMode[mode]);
 	if (mCurrTexType == TT_CUBE_MAP)
 	{
-		glTexParameteri (GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, sGLAddressMode[mode]);
+		glTexParameteri (GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, sGLAddressMode[mode]);
 	}
 }
 
@@ -545,7 +542,7 @@ void LLTexUnit::debugTextureUnit(void)
 	if (mIndex < 0) return;
 
 	GLint activeTexture;
-	glGetIntegerv(GL_ACTIVE_TEXTURE_ARB, &activeTexture);
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTexture);
 	if ((GL_TEXTURE0 + mIndex) != activeTexture)
 	{
 		U32 set_unit = (activeTexture - GL_TEXTURE0);

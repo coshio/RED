@@ -562,20 +562,7 @@ void LLViewerTexture::getGPUMemoryForTextures(S32Megabytes &gpu, S32Megabytes &p
     timer.reset();
 
     LL_RECORD_BLOCK_TIME(FTM_TEXTURE_MEMORY_CHECK);
-
-    if (gGLManager.mHasATIMemInfo)
-    {
-        S32 meminfo[4];
-        glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, meminfo);
-        gpu_res = (S32Megabytes)meminfo[0];
-
-        // <FS:Ansariel> Maybe do this independently from AMD cards????
-        //check main memory, only works for windows.
-        //LLMemory::updateMemoryInfo();
-        //physical_res = LLMemory::getAvailableMemKB();
-        // </FS:Ansariel>
-    }
-    else if (gGLManager.mHasNVXMemInfo)
+    if (gGLManager.mHasNVXMemInfo)
     {
         S32 free_memory;
         glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &free_memory);

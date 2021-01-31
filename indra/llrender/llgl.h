@@ -86,7 +86,6 @@ public:
 
 	// Extensions used by everyone
 	BOOL mHasMultitexture;
-	BOOL mHasATIMemInfo;
 	BOOL mHasAMDAssociations;
 	BOOL mHasNVXMemInfo;
 	S32	 mNumTextureUnits;
@@ -136,7 +135,6 @@ public:
 	BOOL mIsGF2or4MX;
 	BOOL mIsGF3;
 	BOOL mIsGFFX;
-	BOOL mATIOffsetVerticalLines;
 	BOOL mATIOldDriver;
 
 #if LL_DARWIN

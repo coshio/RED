@@ -169,7 +169,6 @@ PFNGLBUFFERPARAMETERIAPPLEPROC	glBufferParameteriAPPLE = NULL;
 PFNGLFLUSHMAPPEDBUFFERRANGEAPPLEPROC glFlushMappedBufferRangeAPPLE = NULL;
 
 // vertex object prototypes
-PFNGLNEWOBJECTBUFFERATIPROC			glNewObjectBufferATI = NULL;
 PFNGLISOBJECTBUFFERATIPROC			glIsObjectBufferATI = NULL;
 PFNGLUPDATEOBJECTBUFFERATIPROC		glUpdateObjectBufferATI = NULL;
 PFNGLGETOBJECTBUFFERFVATIPROC		glGetObjectBufferfvATI = NULL;
@@ -388,7 +387,6 @@ LLGLManager::LLGLManager() :
 	mIsDisabled(FALSE),
 
 	mHasMultitexture(FALSE),
-	mHasATIMemInfo(FALSE),
 	mHasAMDAssociations(FALSE),
 	mHasNVXMemInfo(FALSE),
 	mNumTextureUnits(1),
@@ -410,7 +408,6 @@ LLGLManager::LLGLManager() :
 	mHasOcclusionQuery(FALSE),
 	mHasTimerQuery(FALSE),
 	mHasOcclusionQuery2(FALSE),
-	mHasPointParameters(FALSE),
 	mHasDrawBuffers(FALSE),
 	mHasTextureRectangle(FALSE),
 	mHasTransformFeedback(FALSE),
@@ -424,13 +421,11 @@ LLGLManager::LLGLManager() :
 	mHasCubeMap(FALSE),
 	mHasDebugOutput(FALSE),
 
-	mIsATI(FALSE),
 	mIsNVIDIA(FALSE),
 	mIsIntel(FALSE),
 	mIsGF2or4MX(FALSE),
 	mIsGF3(FALSE),
 	mIsGFFX(FALSE),
-	mATIOffsetVerticalLines(FALSE),
 	mATIOldDriver(FALSE),
 #if LL_DARWIN
 	mIsMobileGF(FALSE),
@@ -873,14 +868,12 @@ void LLGLManager::initExtensions(){
 	mHasAnisotropic = FALSE;
 	mHasCubeMap = FALSE;
 	mHasOcclusionQuery = FALSE;
-	mHasPointParameters = FALSE;
 	mHasShaderObjects = FALSE;
 	mHasVertexShader = FALSE;
 	mHasFragmentShader = FALSE;
 	mHasTextureRectangle = FALSE;
 #else // LL_MESA_HEADLESS //important, gGLHExts.mSysExts is uninitialized until after glh_init_extensions is called
 	mHasMultitexture = glh_init_extensions("GL_ARB_multitexture");
-	mHasATIMemInfo = ExtensionExists("GL_ATI_meminfo", gGLHExts.mSysExts); //Basic AMD method, also see mHasAMDAssociations
 	mHasNVXMemInfo = ExtensionExists("GL_NVX_gpu_memory_info", gGLHExts.mSysExts);
 	mHasSeparateSpecularColor = glh_init_extensions("GL_EXT_separate_specular_color");
 	mHasAnisotropic = glh_init_extensions("GL_EXT_texture_filter_anisotropic");
@@ -930,9 +923,7 @@ void LLGLManager::initExtensions(){
 	mHasTextureRectangle = ExtensionExists("GL_ARB_texture_rectangle", gGLHExts.mSysExts);
 	mHasDebugOutput = ExtensionExists("GL_ARB_debug_output", gGLHExts.mSysExts);
 	mHasTransformFeedback = mGLVersion >= 4.f ? TRUE : FALSE;
-#if !LL_DARWIN
-	mHasPointParameters = !mIsATI && ExtensionExists("GL_ARB_point_parameters", gGLHExts.mSysExts);
-#endif
+
 	mHasShaderObjects = ExtensionExists("GL_ARB_shader_objects", gGLHExts.mSysExts);
 	mHasVertexShader = ExtensionExists("GL_ARB_vertex_program", gGLHExts.mSysExts) && ExtensionExists("GL_ARB_vertex_shader", gGLHExts.mSysExts);
 	mHasFragmentShader = ExtensionExists("GL_ARB_fragment_shader", gGLHExts.mSysExts);
@@ -956,7 +947,6 @@ void LLGLManager::initExtensions(){
 		mHasAnisotropic = FALSE;
 		mHasCubeMap = FALSE;
 		mHasOcclusionQuery = FALSE;
-		mHasPointParameters = FALSE;
 		mHasShaderObjects = FALSE;
 		mHasVertexShader = FALSE;
 		mHasFragmentShader = FALSE;
@@ -999,7 +989,6 @@ void LLGLManager::initExtensions(){
 		if (strchr(blacklist,'m')) mHasShaderObjects = FALSE;//S
 		if (strchr(blacklist,'n')) mHasVertexShader = FALSE;//S
 		if (strchr(blacklist,'o')) mHasFragmentShader = FALSE;//S
-		if (strchr(blacklist,'p')) mHasPointParameters = FALSE;//S
 		if (strchr(blacklist,'q')) mHasFramebufferObject = FALSE;//S
 		if (strchr(blacklist,'r')) mHasDrawBuffers = FALSE;//S
 		if (strchr(blacklist,'s')) mHasTextureRectangle = FALSE;
@@ -1029,9 +1018,7 @@ void LLGLManager::initExtensions(){
 	if (!mHasOcclusionQuery2){
 		LL_INFOS("RenderInit") << "Couldn't initialize GL_ARB_occlusion_query2" << LL_ENDL;
 	}
-	if (!mHasPointParameters){
-		LL_INFOS("RenderInit") << "Couldn't initialize GL_ARB_point_parameters" << LL_ENDL;
-	}
+
 	if (!mHasShaderObjects){
 		LL_INFOS("RenderInit") << "Couldn't initialize GL_ARB_shader_objects" << LL_ENDL;
 	}
@@ -1054,13 +1041,7 @@ void LLGLManager::initExtensions(){
 		LL_INFOS("RenderInit") << "Disabling mip-map generation for Intel GPUs" << LL_ENDL;
 		mHasMipMapGeneration = FALSE;
 	}
-#if !LL_DARWIN
-	if (mIsATI && mHasMipMapGeneration)
-	{
-		LL_INFOS("RenderInit") << "Disabling mip-map generation for ATI GPUs (performance opt)" << LL_ENDL;
-		mHasMipMapGeneration = FALSE;
-	}
-#endif
+
 
 	// Misc
 	glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, (GLint*) &mGLMaxVertexRange);
@@ -1180,11 +1161,7 @@ void LLGLManager::initExtensions(){
 		glGetQueryObjecti64v = (PFNGLGETQUERYOBJECTI64VPROC) GLH_EXT_GET_PROC_ADDRESS("glGetQueryObjecti64v");
 		glGetQueryObjectui64v = (PFNGLGETQUERYOBJECTUI64VPROC) GLH_EXT_GET_PROC_ADDRESS("glGetQueryObjectui64v");
 	}
-	if (mHasPointParameters){
-		LL_INFOS() << "initExtensions() PointParameters-related procs..." << LL_ENDL;
-		glPointParameterfARB = (PFNGLPOINTPARAMETERFARBPROC)GLH_EXT_GET_PROC_ADDRESS("glPointParameterf");
-		glPointParameterfvARB = (PFNGLPOINTPARAMETERFVARBPROC)GLH_EXT_GET_PROC_ADDRESS("glPointParameterfv");
-	}
+
 	if (mHasShaderObjects){
 		glDeleteObjectARB = (PFNGLDELETEOBJECTARBPROC) GLH_EXT_GET_PROC_ADDRESS("glDeleteObjectARB");
 		glGetHandleARB = (PFNGLGETHANDLEARBPROC) GLH_EXT_GET_PROC_ADDRESS("glGetHandleARB");
@@ -1543,7 +1520,7 @@ void LLGLState::checkTextureChannels(const std::string& msg)
 
 
 	GLint activeTexture;
-	glGetIntegerv(GL_ACTIVE_TEXTURE_ARB, &activeTexture);
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTexture);
 
 
 	BOOL error = FALSE;
@@ -1571,12 +1548,12 @@ void LLGLState::checkTextureChannels(const std::string& msg)
 		"GL_TEXTURE_2D",
 		"GL_TEXTURE_COORD_ARRAY",
 		"GL_TEXTURE_1D",
-		"GL_TEXTURE_CUBE_MAP_ARB",
+		"GL_TEXTURE_CUBE_MAP",
 		"GL_TEXTURE_GEN_S",
 		"GL_TEXTURE_GEN_T",
 		"GL_TEXTURE_GEN_Q",
 		"GL_TEXTURE_GEN_R",
-		"GL_TEXTURE_RECTANGLE_ARB",
+		"GL_TEXTURE_RECTANGLE",
 		"GL_TEXTURE_2D_MULTISAMPLE"
 	};
 
@@ -1585,12 +1562,12 @@ void LLGLState::checkTextureChannels(const std::string& msg)
 		GL_TEXTURE_2D,
 		GL_TEXTURE_COORD_ARRAY,
 		GL_TEXTURE_1D,
-		GL_TEXTURE_CUBE_MAP_ARB,
+		GL_TEXTURE_CUBE_MAP,
 		GL_TEXTURE_GEN_S,
 		GL_TEXTURE_GEN_T,
 		GL_TEXTURE_GEN_Q,
 		GL_TEXTURE_GEN_R,
-		GL_TEXTURE_RECTANGLE_ARB,
+		GL_TEXTURE_RECTANGLE,
 		GL_TEXTURE_2D_MULTISAMPLE
 	};
 
