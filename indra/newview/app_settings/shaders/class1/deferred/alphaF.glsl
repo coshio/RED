@@ -33,11 +33,7 @@
 #define NON_INDEXED 2
 #define NON_INDEXED_NO_COLOR 3
 
-#ifdef DEFINE_GL_FRAGCOLOR
 out vec4 frag_color;
-#else
-#define frag_color gl_FragColor
-#endif
 
 uniform mat3 env_mat;
 uniform vec3 sun_dir;

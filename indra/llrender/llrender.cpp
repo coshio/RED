@@ -448,7 +448,7 @@ GLint LLTexUnit::getTextureSource(eTextureBlendSrc src)
 		case TBS_PREV_ALPHA:
 		case TBS_ONE_MINUS_PREV_COLOR:
 		case TBS_ONE_MINUS_PREV_ALPHA:
-			return GL_PREVIOUS_ARB;
+			return GL_PREVIOUS;
 
 		// All four cases should return the same value.
 		case TBS_TEX_COLOR:
@@ -462,18 +462,18 @@ GLint LLTexUnit::getTextureSource(eTextureBlendSrc src)
 		case TBS_VERT_ALPHA:
 		case TBS_ONE_MINUS_VERT_COLOR:
 		case TBS_ONE_MINUS_VERT_ALPHA:
-			return GL_PRIMARY_COLOR_ARB;
+			return GL_PRIMARY_COLOR;
 
 		// All four cases should return the same value.
 		case TBS_CONST_COLOR:
 		case TBS_CONST_ALPHA:
 		case TBS_ONE_MINUS_CONST_COLOR:
 		case TBS_ONE_MINUS_CONST_ALPHA:
-			return GL_CONSTANT_ARB;
+			return GL_CONSTANT;
 
 		default:
 			LL_WARNS() << "Unknown eTextureBlendSrc: " << src << ".  Using Vertex Color instead." << LL_ENDL;
-			return GL_PRIMARY_COLOR_ARB;
+			return GL_PRIMARY_COLOR;
 	}
 }
 

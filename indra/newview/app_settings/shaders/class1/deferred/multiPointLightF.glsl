@@ -26,11 +26,7 @@
 
 /*[EXTRA_CODE_HERE]*/
 
-#ifdef DEFINE_GL_FRAGCOLOR
-  out vec4 frag_color;
-#else
-  #define frag_color gl_FragColor
-#endif
+out vec4 frag_color;
 
 uniform sampler2DRect depthMap;
 uniform sampler2DRect diffuseRect;
@@ -103,11 +99,11 @@ void main(){
   vec3  outputColor = vec3(0.0);
   float bloom = 0.0;
 
-// #if defined(LOCAL_LIGHT_KILL)
-//     discard;
-// #else
+#if defined(LOCAL_LIGHT_KILL)
+    discard;
+#else
   float depth = texture2DRect(depthMap, vary_rectcoord.xy).r;
-  vec4 ndc = vec4(vary_fragcoord.xy, 2.0 * depth -1.0, 1.0);
+  vec4 ndc = vec4(vary_fragcoord.xy, fma(depth,2.0,-1.0), 1.0);
   vec4 vertexPosition = inv_proj * ndc;
     vertexPosition /= vertexPosition.w;
     vertexPosition.w = 1.0;
@@ -124,9 +120,10 @@ void main(){
 
   vec3 eyeDirection = normalize(-vertexPosition.xyz); //Eye Direction
 	for (int i = 0; i < LIGHT_COUNT; ++i){
-    vec3 lightDirection = (light[i].xyz - vertexPosition.xyz) / light[i].w;
+    vec3 lightDirection = (light[i].xyz - vertexPosition.xyz);
 		vec3 unitLightDirection = normalize(lightDirection);
     float distance = length(lightDirection);
+    distance /= light[i].w;
 		if (distance <= 1.0){
       //Quadratic Falloff Distance Attenuation Equation
       float fa = light_col[i].a + 1.0;
@@ -147,7 +144,7 @@ void main(){
       kD *= 1.0 - Metallic;
       float NdotL = max(dot(Normal.xyz, unitLightDirection.xyz), 0.0) * 6;
       outputColor += ((kD * Diffuse.rgb)  / PI + specular * Specular.rgb) * radiance  * NdotL;
-      bloom += dot(specular, specular) / 6;
+      bloom += dot(specular, specular) * 0.166667;
       //
       float da = dot(Normal.xyz, unitLightDirection);
       float NdotH = dot(Normal.xyz, H);
@@ -160,7 +157,7 @@ void main(){
 		}
 	}
 
-// #endif
+#endif
 
 
 

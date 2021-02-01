@@ -23,11 +23,7 @@
  * $/LicenseInfo$
  */
  
-#ifdef DEFINE_GL_FRAGCOLOR
 out vec4 frag_color;
-#else
-#define frag_color gl_FragColor
-#endif
 
 in vec4 vertex_color;
 in vec4 vary_texcoord0;

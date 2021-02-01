@@ -698,11 +698,10 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 	}
 
 
-	extra_code_text[extra_code_count++] = strdup("#define DEFINE_GL_FRAGCOLOR 1\n");
 	extra_code_text[extra_code_count++] = strdup("#define FXAA_GLSL_130 1\n");
 
 
-	if (type == GL_VERTEX_SHADER_ARB){
+	if (type == GL_VERTEX_SHADER){
 		//"varying" state is "out" in a vertex program, "in" in a fragment program
 		// ("varying" is deprecated after version 1.20)
 	}
@@ -733,7 +732,7 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 
 
 
-	if (texture_index_channels > 0 && type == GL_FRAGMENT_SHADER_ARB)
+	if (texture_index_channels > 0 && type == GL_FRAGMENT_SHADER)
 	{
 		extra_code_text[extra_code_count++] = strdup("#define HAS_DIFFUSE_LOOKUP\n");
 
@@ -937,10 +936,10 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 	if (ret)
 	{
 		// Add shader file to map
-        if (type == GL_VERTEX_SHADER_ARB) {
+        if (type == GL_VERTEX_SHADER) {
             mVertexShaderObjects[filename] = ret;
         }
-        else if (type == GL_FRAGMENT_SHADER_ARB) {
+        else if (type == GL_FRAGMENT_SHADER) {
             mFragmentShaderObjects[filename] = ret;
         }
 		shader_level = try_gpu_class;

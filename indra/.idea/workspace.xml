@@ -10,7 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8683bfdc-ae70-42a0-8d1d-46e7b29b994c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/llrender/llvertexbuffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llvertexbuffer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llrender/llrender.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/llrender/llrender.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/aoUtil.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/aoUtil.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/fxaaF.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/fxaaF.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/materialV.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/materialV.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/multiPointLightF.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/newview/app_settings/shaders/class1/deferred/multiPointLightF.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newview/app_settings/shaders/class2/deferred/softenLightF.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/newview/app_settings/shaders/class2/deferred/softenLightF.glsl" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -86,25 +92,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/llrender/llvertexbuffer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="933" column="24" selection-start-line="933" selection-start-column="24" selection-end-line="933" selection-end-column="24" />
+            <state relative-caret-position="512">
+              <caret line="934" column="55" lean-forward="true" selection-start-line="934" selection-start-column="55" selection-end-line="934" selection-end-column="55" />
               <folding>
-                <element signature="e#9289#9316#0" expanded="true" />
-                <element signature="e#22921#22942#0" expanded="true" />
-                <element signature="e#26228#26253#0" expanded="true" />
-                <element signature="e#31534#31558#0" expanded="true" />
-                <element signature="e#32045#32073#0" expanded="true" />
-                <element signature="e#37953#38484#0" expanded="true" />
-                <element signature="e#38554#39156#0" expanded="true" />
-                <element signature="e#42839#43339#0" expanded="true" />
-                <element signature="e#43408#43801#0" expanded="true" />
-                <element signature="e#48157#48215#0" expanded="true" />
-                <element signature="e#50689#50755#0" expanded="true" />
-                <element signature="e#50862#50972#0" expanded="true" />
-                <element signature="e#51360#51378#0" expanded="true" />
-                <element signature="e#56312#56340#0" expanded="true" />
-                <element signature="e#58102#58274#0" expanded="true" />
-                <element signature="e#62094#62115#0" expanded="true" />
+                <element signature="e#9220#9247#0" expanded="true" />
+                <element signature="e#22512#22533#0" expanded="true" />
+                <element signature="e#25819#25844#0" expanded="true" />
+                <element signature="e#31172#31196#0" expanded="true" />
+                <element signature="e#31683#31711#0" expanded="true" />
+                <element signature="e#37454#37985#0" expanded="true" />
+                <element signature="e#38055#38657#0" expanded="true" />
+                <element signature="e#42292#42792#0" expanded="true" />
+                <element signature="e#42861#43254#0" expanded="true" />
+                <element signature="e#47494#47552#0" expanded="true" />
+                <element signature="e#49911#49977#0" expanded="true" />
+                <element signature="e#50084#50194#0" expanded="true" />
+                <element signature="e#50594#50612#0" expanded="true" />
+                <element signature="e#55546#55574#0" expanded="true" />
+                <element signature="e#57319#57491#0" expanded="true" />
+                <element signature="e#61311#61332#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -150,9 +156,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mHasMultitexture</find>
-      <find>GL_TEXTURE0_ARB</find>
-      <find>createLUTBuffers</find>
       <find>getMaxLightingDetail</find>
       <find>GETMAXLIGHTINGDETAIL</find>
       <find>glBindBuffer</find>
@@ -180,9 +183,13 @@
       <find>VBO</find>
       <find>glUniform1fARB</find>
       <find>gGLManager.mGLSLVersionMajor</find>
+      <find>DEFINE_GL_FRAGCOLOR</find>
+      <find>GL_VERTEX_SHADER_ARB</find>
+      <find>mutex</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Artemis\Desktop\SecondLifeVanillaDev\PullerDevFirestorm\RED\indra\cmake-build-debug</dir>
+      <dir>C:\Users\Artemis\Desktop\SecondLifeVanillaDev\PullerDevFirestorm\RED\indra\newview\app_settings\shaders\class1</dir>
       <dir>C:\Users\Artemis\Desktop\SecondLifeVanillaDev\PullerDevFirestorm\RED\indra</dir>
     </dirStrings>
   </component>
@@ -213,7 +220,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="114" />
     <option name="y" value="81" />
     <option name="width" value="1152" />
@@ -236,7 +243,20 @@
             <path>
               <item name="SecondLife" type="b2602c69:ProjectViewProjectNode" />
               <item name="indra" type="462c0819:PsiDirectoryNode" />
-              <item name="llrender" type="462c0819:PsiDirectoryNode" />
+              <item name="newview" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SecondLife" type="b2602c69:ProjectViewProjectNode" />
+              <item name="indra" type="462c0819:PsiDirectoryNode" />
+              <item name="newview" type="462c0819:PsiDirectoryNode" />
+              <item name="app_settings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SecondLife" type="b2602c69:ProjectViewProjectNode" />
+              <item name="indra" type="462c0819:PsiDirectoryNode" />
+              <item name="newview" type="462c0819:PsiDirectoryNode" />
+              <item name="app_settings" type="462c0819:PsiDirectoryNode" />
+              <item name="shaders" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -283,11 +303,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51277000" />
+    <option name="totallyTimeSpent" value="56151000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="22" width="1936" height="1066" extended-state="7" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16204691" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -431,25 +450,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/llrender/llvertexbuffer.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="933" column="24" selection-start-line="933" selection-start-column="24" selection-end-line="933" selection-end-column="24" />
+        <state relative-caret-position="512">
+          <caret line="934" column="55" lean-forward="true" selection-start-line="934" selection-start-column="55" selection-end-line="934" selection-end-column="55" />
           <folding>
-            <element signature="e#9289#9316#0" expanded="true" />
-            <element signature="e#22921#22942#0" expanded="true" />
-            <element signature="e#26228#26253#0" expanded="true" />
-            <element signature="e#31534#31558#0" expanded="true" />
-            <element signature="e#32045#32073#0" expanded="true" />
-            <element signature="e#37953#38484#0" expanded="true" />
-            <element signature="e#38554#39156#0" expanded="true" />
-            <element signature="e#42839#43339#0" expanded="true" />
-            <element signature="e#43408#43801#0" expanded="true" />
-            <element signature="e#48157#48215#0" expanded="true" />
-            <element signature="e#50689#50755#0" expanded="true" />
-            <element signature="e#50862#50972#0" expanded="true" />
-            <element signature="e#51360#51378#0" expanded="true" />
-            <element signature="e#56312#56340#0" expanded="true" />
-            <element signature="e#58102#58274#0" expanded="true" />
-            <element signature="e#62094#62115#0" expanded="true" />
+            <element signature="e#9220#9247#0" expanded="true" />
+            <element signature="e#22512#22533#0" expanded="true" />
+            <element signature="e#25819#25844#0" expanded="true" />
+            <element signature="e#31172#31196#0" expanded="true" />
+            <element signature="e#31683#31711#0" expanded="true" />
+            <element signature="e#37454#37985#0" expanded="true" />
+            <element signature="e#38055#38657#0" expanded="true" />
+            <element signature="e#42292#42792#0" expanded="true" />
+            <element signature="e#42861#43254#0" expanded="true" />
+            <element signature="e#47494#47552#0" expanded="true" />
+            <element signature="e#49911#49977#0" expanded="true" />
+            <element signature="e#50084#50194#0" expanded="true" />
+            <element signature="e#50594#50612#0" expanded="true" />
+            <element signature="e#55546#55574#0" expanded="true" />
+            <element signature="e#57319#57491#0" expanded="true" />
+            <element signature="e#61311#61332#0" expanded="true" />
           </folding>
         </state>
       </provider>

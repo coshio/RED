@@ -111,7 +111,7 @@ float calcAmbientOcclusion(vec4 pos, vec3 norm, vec2 pos_screen)
 
     float angle_hidden = 0.0;
     float points = 0;
-    float bias = 0.04;
+    float bias = 0.025;
     float scale = min(ssao_radius / -pos_world.z, ssao_max_radius);
 
     // it was found that keeping # of samples a constant was the fastest, probably due to compiler optimizations (unrolling?)

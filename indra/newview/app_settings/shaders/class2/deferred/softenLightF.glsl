@@ -161,7 +161,8 @@ void main(){
     vec3 sun_contrib = min(da, scol) * sunlit;
 
     //shadow is handled above
-    vec3 radiance = sun_contrib * ambocc;
+    //TODO:Investigate if moving amblight here improves anything.
+    vec3 radiance = sun_contrib;
     vec3 Lo = vec3(0.0);
     vec3 L = normalize(lightDirection);
     vec3 eyeDirection = normalize(-vertexPosition.xyz);

@@ -23,11 +23,7 @@
  * $/LicenseInfo$
  */
  
-#ifdef DEFINE_GL_FRAGCOLOR
 out vec4 frag_color;
-#else
-#define frag_color gl_FragColor
-#endif
 
 vec3 scaleSoftClip(vec3 inColor);
 vec3 atmosTransport(vec3 inColor);

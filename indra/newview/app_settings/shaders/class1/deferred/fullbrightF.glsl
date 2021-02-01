@@ -27,11 +27,7 @@
 
 /*[EXTRA_CODE_HERE]*/
 
-#ifdef DEFINE_GL_FRAGCOLOR
 out vec4 frag_color;
-#else
-#define frag_color gl_FragColor
-#endif
 
 #if !defined(HAS_DIFFUSE_LOOKUP)
 uniform sampler2D diffuseMap;
