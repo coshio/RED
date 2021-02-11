@@ -148,7 +148,7 @@ void exoPostProcess::ExodusRenderVignette(LLRenderTarget* src, LLRenderTarget* d
 
 		shader->uniform3fv(LLShaderMgr::EXO_RENDER_VIGNETTE, 1, sExodusRenderVignette.mV);
 		mExoPostBuffer->drawArrays(LLRender::TRIANGLES, 0, 3);
-		stop_glerror();
+
 
 		shader->unbind();
 		dst->flush();

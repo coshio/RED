@@ -459,7 +459,7 @@ void LLViewerTextureManager::init()
 
 void LLViewerTextureManager::cleanup()
 {
-	stop_glerror();
+
 
 	delete gTextureManagerBridgep;
 	LLImageGL::sDefaultGLTexture = NULL;
@@ -849,7 +849,7 @@ bool LLViewerTexture::bindDefaultImage(S32 stage)
 	{
 		LL_WARNS() << "LLViewerTexture::bindDefaultImage failed." << LL_ENDL;
 	}
-	stop_glerror();
+
 
 	//check if there is cached raw image and switch to it if possible
 	switchToCachedImage();

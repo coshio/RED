@@ -337,7 +337,7 @@ void LLGLSLShader::unloadInternal()
 {
     sInstances.erase(this);
 
-    stop_glerror();
+
     mAttribute.clear();
     mTexture.clear();
     mUniform.clear();
@@ -379,7 +379,7 @@ void LLGLSLShader::unloadInternal()
     //hack to make apple not complain
     glGetError();
 
-    stop_glerror();
+
 }
 
 BOOL LLGLSLShader::createShader(std::vector<LLStaticHashedString> * attributes,
@@ -495,9 +495,9 @@ BOOL LLGLSLShader::createShader(std::vector<LLStaticHashedString> * attributes,
 BOOL LLGLSLShader::attachVertexObject(std::string object_path) {
     if (LLShaderMgr::instance()->mVertexShaderObjects.count(object_path) > 0)
     {
-        stop_glerror();
+
         glAttachObjectARB(mProgramObject, LLShaderMgr::instance()->mVertexShaderObjects[object_path]);
-        stop_glerror();
+
         return TRUE;
     }
     else
@@ -511,9 +511,9 @@ BOOL LLGLSLShader::attachFragmentObject(std::string object_path)
 {
     if (LLShaderMgr::instance()->mFragmentShaderObjects.count(object_path) > 0)
     {
-        stop_glerror();
+
         glAttachObjectARB(mProgramObject, LLShaderMgr::instance()->mFragmentShaderObjects[object_path]);
-        stop_glerror();
+
         return TRUE;
     }
     else
@@ -527,9 +527,9 @@ void LLGLSLShader::attachObject(GLhandleARB object)
 {
     if (object != 0)
     {
-        stop_glerror();
+
         glAttachObjectARB(mProgramObject, object);
-        stop_glerror();
+
     }
     else
     {
@@ -894,61 +894,47 @@ BOOL LLGLSLShader::link(BOOL suppress_errors)
     return success;
 }
 
-void LLGLSLShader::bind()
-{
+void LLGLSLShader::bind() {
     gGL.flush();
-    if (gGLManager.mHasShaderObjects)
-    {
-        LLVertexBuffer::unbind();
-        glUseProgramObjectARB(mProgramObject);
-        sCurBoundShader = mProgramObject;
-        sCurBoundShaderPtr = this;
-        if (mUniformsDirty)
-        {
-            LLShaderMgr::instance()->updateShaderUniforms(this);
-            mUniformsDirty = FALSE;
-        }
-    }
-}
-
-void LLGLSLShader::unbind()
-{
-    gGL.flush();
-    if (gGLManager.mHasShaderObjects)
-    {
-        stop_glerror();
-        if (gGLManager.mIsNVIDIA)
-        {
-            for (U32 i = 0; i < mAttribute.size(); ++i)
-            {
-                vertexAttrib4f(i, 0,0,0,1);
-                stop_glerror();
-            }
-        }
-        LLVertexBuffer::unbind();
-        glUseProgramObjectARB(0);
-        sCurBoundShader = 0;
-        sCurBoundShaderPtr = NULL;
-        stop_glerror();
-    }
-}
-
-void LLGLSLShader::bindNoShader(void)
-{
     LLVertexBuffer::unbind();
-    if (gGLManager.mHasShaderObjects)
-    {
-        glUseProgramObjectARB(0);
-        sCurBoundShader = 0;
-        sCurBoundShaderPtr = NULL;
+    glUseProgramObjectARB(mProgramObject);
+    sCurBoundShader = mProgramObject;
+    sCurBoundShaderPtr = this;
+    if (mUniformsDirty){
+        LLShaderMgr::instance()->updateShaderUniforms(this);
+        mUniformsDirty = FALSE;
     }
+
+}
+
+void LLGLSLShader::unbind() {
+    gGL.flush();
+    if (gGLManager.mIsNVIDIA) {
+        for (U32 i = 0; i < mAttribute.size(); ++i) {
+            vertexAttrib4f(i, 0,0,0,1);
+
+        }
+    }
+    LLVertexBuffer::unbind();
+    glUseProgramObjectARB(0);
+    sCurBoundShader = 0;
+    sCurBoundShaderPtr = NULL;
+
+
+}
+
+void LLGLSLShader::bindNoShader(void) {
+    LLVertexBuffer::unbind();
+    glUseProgramObjectARB(0);
+    sCurBoundShader = 0;
+    sCurBoundShaderPtr = NULL;
+
 }
 
 S32 LLGLSLShader::bindTexture(const std::string &uniform, LLTexture *texture, LLTexUnit::eTextureType mode, LLTexUnit::eTextureColorSpace colorspace)
 {
     S32 channel = 0;
     channel = getUniformLocation(uniform);
-    
     return bindTexture(channel, texture, mode, colorspace);
 }
 
@@ -1347,12 +1333,12 @@ GLint LLGLSLShader::getUniformLocation(const LLStaticHashedString& uniform)
         {
             if (gDebugGL)
             {
-                stop_glerror();
+
                 if (iter->second != glGetUniformLocationARB(mProgramObject, uniform.String().c_str()))
                 {
                     LL_ERRS() << "Uniform does not match." << LL_ENDL;
                 }
-                stop_glerror();
+
             }
             ret = iter->second;
         }
@@ -1525,9 +1511,9 @@ void LLGLSLShader::uniform4fv(const LLStaticHashedString& uniform, U32 count, co
         std::map<GLint, LLVector4>::iterator iter = mValue.find(location);
         if (iter == mValue.end() || shouldChange(iter->second,vec) || count != 1)
         {
-            stop_glerror();
+
             glUniform4fvARB(location, count, v);
-            stop_glerror();
+
             mValue[location] = vec;
         }
     }
@@ -1539,9 +1525,9 @@ void LLGLSLShader::uniformMatrix4fv(const LLStaticHashedString& uniform, U32 cou
                 
     if (location >= 0)
     {
-        stop_glerror();
+
         glUniformMatrix4fvARB(location, count, transpose, v);
-        stop_glerror();
+
     }
 }
 

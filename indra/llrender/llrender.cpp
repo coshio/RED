@@ -846,7 +846,6 @@ void LLRender::refreshState(void){
 	}
 	mTexUnits[active_unit]->activate();
 	setColorMask(mCurrColorMask[0], mCurrColorMask[1], mCurrColorMask[2], mCurrColorMask[3]);
-	setAlphaRejectSettings(mCurrAlphaFunc, mCurrAlphaFuncVal);
 	mDirty = false;
 }
 
@@ -1294,8 +1293,7 @@ void LLRender::setColorMask(bool writeColorR, bool writeColorG, bool writeColorB
 	}
 }
 
-void LLRender::setSceneBlendType(eBlendType type)
-{
+void LLRender::setSceneBlendType(eBlendType type){
 	switch (type){
 		case BT_ALPHA:
 			blendFunc(BF_SOURCE_ALPHA, BF_ONE_MINUS_SOURCE_ALPHA);
@@ -1324,20 +1322,11 @@ void LLRender::setSceneBlendType(eBlendType type)
 	}
 }
 //------------------------------------------------------------------------------
-void LLRender::setAlphaRejectSettings(eCompareFunc func, F32 value){
-	flush();
-	//glAlphaFunc is deprecated in OpenGL 3.3
-	return;
-}
-//------------------------------------------------------------------------------
-
-void LLRender::blendFunc(eBlendFactor sfactor, eBlendFactor dfactor)
-{
+void LLRender::blendFunc(eBlendFactor sfactor, eBlendFactor dfactor) {
 	llassert(sfactor < BF_UNDEF);
 	llassert(dfactor < BF_UNDEF);
 	if (mCurrBlendColorSFactor != sfactor || mCurrBlendColorDFactor != dfactor ||
-	    mCurrBlendAlphaSFactor != sfactor || mCurrBlendAlphaDFactor != dfactor)
-	{
+	    mCurrBlendAlphaSFactor != sfactor || mCurrBlendAlphaDFactor != dfactor){
 		mCurrBlendColorSFactor = sfactor;
 		mCurrBlendAlphaSFactor = sfactor;
 		mCurrBlendColorDFactor = dfactor;
@@ -1886,94 +1875,42 @@ void LLRender::color3fv(const GLfloat* c)
 	color4f(c[0],c[1],c[2],1);
 }
 
-void LLRender::diffuseColor3f(F32 r, F32 g, F32 b)
-{
+void LLRender::diffuseColor3f(F32 r, F32 g, F32 b) {
 	LLGLSLShader* shader = LLGLSLShader::sCurBoundShaderPtr;
 	llassert(shader != NULL);
+	shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, r,g,b,1.f);
 
-	if (shader)
-	{
-		shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, r,g,b,1.f);
-	}
-	else
-	{
-		glColor3f(r,g,b);
-	}
 }
 
-void LLRender::diffuseColor3fv(const F32* c)
-{
+void LLRender::diffuseColor3fv(const F32* c) {
 	LLGLSLShader* shader = LLGLSLShader::sCurBoundShaderPtr;
 	llassert(shader != NULL);
+	shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, c[0], c[1], c[2], 1.f);
 
-	if (shader)
-	{
-		shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, c[0], c[1], c[2], 1.f);
-	}
-	else
-	{
-		glColor3fv(c);
-	}
 }
 
-void LLRender::diffuseColor4f(F32 r, F32 g, F32 b, F32 a)
-{
+void LLRender::diffuseColor4f(F32 r, F32 g, F32 b, F32 a) {
 	LLGLSLShader* shader = LLGLSLShader::sCurBoundShaderPtr;
 	llassert(shader != NULL);
-
-	if (shader)
-	{
-		shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, r,g,b,a);
-	}
-	else
-	{
-		glColor4f(r,g,b,a);
-	}
+	shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, r,g,b,a);
 }
 
-void LLRender::diffuseColor4fv(const F32* c)
-{
+void LLRender::diffuseColor4fv(const F32* c) {
 	LLGLSLShader* shader = LLGLSLShader::sCurBoundShaderPtr;
 	llassert(shader != NULL);
-
-	if (shader)
-	{
-		shader->uniform4fv(LLShaderMgr::DIFFUSE_COLOR, 1, c);
-	}
-	else
-	{
-		glColor4fv(c);
-	}
+	shader->uniform4fv(LLShaderMgr::DIFFUSE_COLOR, 1, c);
 }
 
-void LLRender::diffuseColor4ubv(const U8* c)
-{
+void LLRender::diffuseColor4ubv(const U8* c) {
 	LLGLSLShader* shader = LLGLSLShader::sCurBoundShaderPtr;
 	llassert(shader != NULL);
-
-	if (shader)
-	{
-		shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, c[0]/255.f, c[1]/255.f, c[2]/255.f, c[3]/255.f);
-	}
-	else
-	{
-		glColor4ubv(c);
-	}
+	shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, c[0]/255.f, c[1]/255.f, c[2]/255.f, c[3]/255.f);
 }
 
-void LLRender::diffuseColor4ub(U8 r, U8 g, U8 b, U8 a)
-{
+void LLRender::diffuseColor4ub(U8 r, U8 g, U8 b, U8 a) {
 	LLGLSLShader* shader = LLGLSLShader::sCurBoundShaderPtr;
 	llassert(shader != NULL);
-
-	if (shader)
-	{
-		shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, r/255.f, g/255.f, b/255.f, a/255.f);
-	}
-	else
-	{
-		glColor4ub(r,g,b,a);
-	}
+	shader->uniform4f(LLShaderMgr::DIFFUSE_COLOR, r/255.f, g/255.f, b/255.f, a/255.f);
 }
 
 

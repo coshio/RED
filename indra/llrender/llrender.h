@@ -87,7 +87,7 @@ public:
 
 	typedef enum
 	{	// Note: If mipmapping or anisotropic are not enabled or supported it should fall back gracefully
-		TFO_POINT = 0,			// Equal to: min=point, mag=point, mip=none.
+		TFO_POINT = 0,			// Equal to: min=point,  mag=point,  mip=none.
 		TFO_BILINEAR,			// Equal to: min=linear, mag=linear, mip=point.
 		TFO_TRILINEAR,			// Equal to: min=linear, mag=linear, mip=linear.
 		TFO_ANISOTROPIC			// Equal to: min=anisotropic, max=anisotropic, mip=linear.
@@ -443,7 +443,6 @@ public:
 	void setColorMask(bool writeColorR, bool writeColorG, bool writeColorB, bool writeAlpha);
 	void setSceneBlendType(eBlendType type);
 
-	void setAlphaRejectSettings(eCompareFunc func, F32 value = 0.01f);
 
 	// applies blend func to both color and alpha
 	void blendFunc(eBlendFactor sfactor, eBlendFactor dfactor);

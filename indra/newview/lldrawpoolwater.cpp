@@ -184,7 +184,7 @@ void LLDrawPoolWater::render(S32 pass)
 
 	LLVOSky *voskyp = gSky.mVOSkyp;
 
-	stop_glerror();
+
 	LLFace* refl_face = voskyp->getReflFace();
 
 	gPipeline.disableLights();
@@ -275,7 +275,7 @@ void LLDrawPoolWater::render(S32 pass)
 	gGL.getTexUnit(0)->activate();
 	gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
 
-	stop_glerror();
+
 
 	if (gSky.mVOSkyp->getCubeMap())
 	{
@@ -344,7 +344,7 @@ void LLDrawPoolWater::renderOpaqueLegacyWater()
 	shader->bind();
 
 
-	stop_glerror();
+
 
 	// Depth sorting and write to depth buffer
 	// since this is opaque, we should see nothing
@@ -418,7 +418,7 @@ void LLDrawPoolWater::renderOpaqueLegacyWater()
 		face->renderIndexed();
 	}
 
-	stop_glerror();
+
 
 	if (!shader)
 	{
@@ -539,7 +539,7 @@ void LLDrawPoolWater::shade2(bool edge, LLGLSLShader* shader, const LLColor3& li
 	};
 
 	S32 diffTex = shader->enableTexture(LLShaderMgr::DIFFUSE_MAP);
-	stop_glerror();
+
 
 // set uniforms for water rendering
     shader->uniform2fv(LLShaderMgr::DEFERRED_SCREEN_RES, 1, screenRes);

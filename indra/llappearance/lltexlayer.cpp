@@ -328,7 +328,7 @@ BOOL LLTexLayerSet::setInfo(const LLTexLayerSetInfo *info)
 
 	requestUpdate();
 
-	stop_glerror();
+
 
 	return TRUE;
 }
@@ -421,7 +421,7 @@ BOOL LLTexLayerSet::render( S32 x, S32 y, S32 width, S32 height, LLRenderTarget*
 
 		renderAlphaMaskTextures(x, y, width, height, bound_target, false);
 
-		stop_glerror();
+
 	}
 	else
 	{
@@ -1243,7 +1243,7 @@ BOOL LLTexLayer::render(S32 x, S32 y, S32 width, S32 height, LLRenderTarget* bou
 		// Restore standard blend func value
 		gGL.flush();
 		gGL.setSceneBlendType(LLRender::BT_ALPHA);
-		stop_glerror();
+
 	}
 
 	if( !success )

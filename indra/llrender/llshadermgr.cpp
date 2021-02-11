@@ -924,7 +924,7 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 	{
 		ret = 0;
 	}
-	stop_glerror();
+
 
 	//free memory
 	for (GLuint i = 0; i < shader_code_count; i++)

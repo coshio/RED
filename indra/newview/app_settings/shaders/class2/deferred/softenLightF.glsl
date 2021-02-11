@@ -85,7 +85,7 @@ float DistributionGGX(vec3 N, vec3 H, float roughness){
 // ----------------------------------------------------------------------------
 float GeometrySchlickGGX(float NdotV, float roughness){
     float r = (roughness + 1.0);
-    float k = (r*r) / 8.0;
+    float k = (r*r) * 0.125;
     float nom   = NdotV;
     float denom = fma(NdotV, (1.0 - k), k);
     return nom / denom;

@@ -1695,7 +1695,7 @@ void LLEnvironment::update(const LLViewerCamera * cam)
     // cache this for use in rotating the rotated light vec for shader param updates later...
     mLastCamYaw = cam->getYaw() + SUN_DELTA_YAW;
 
-    stop_glerror();
+
 
     // *TODO: potential optimization - this block may only need to be
     // executed some of the time.  For example for water shaders only.
@@ -1756,7 +1756,7 @@ void LLEnvironment::updateGLVariablesForSettings(LLGLSLShader *shader, const LLS
         }
 
         LLSD::Type setting_type = value.type();
-        stop_glerror();
+
         switch (setting_type)
         {
         case LLSD::TypeInteger:
@@ -1790,7 +1790,7 @@ void LLEnvironment::updateGLVariablesForSettings(LLGLSLShader *shader, const LLS
         default:
             break;
         }
-        stop_glerror();
+
     }
     //_WARNS("RIDER") << "----------------------------------------------------------------" << LL_ENDL;
 

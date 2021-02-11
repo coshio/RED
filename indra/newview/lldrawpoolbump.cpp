@@ -731,10 +731,10 @@ void LLDrawPoolBump::beginBump(U32 pass)
 	sVertexMask = VERTEX_MASK_BUMP;
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_BUMP);
 	// Optional second pass: emboss bump map
-	stop_glerror();
+
 	gObjectBumpProgram.bind();
 	gGL.setSceneBlendType(LLRender::BT_MULT_X2);
-	stop_glerror();
+
 }
 
 //static

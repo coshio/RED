@@ -322,14 +322,14 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 	LLGLState::checkStates();
 	LLGLState::checkTextureChannels();
 	
-	stop_glerror();
+
 
 	gPipeline.disableLights();
 	
 	//reset vertex buffers if needed
 	gPipeline.doResetVertexBuffers();
 
-	stop_glerror();
+
 
 	// Don't draw if the window is hidden or minimized.
 	// In fact, must explicitly check the minimized state before drawing.
@@ -341,18 +341,18 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 		// Clean up memory the pools may have allocated
 		if (rebuild)
 		{
-			stop_glerror();
+
 			gPipeline.rebuildPools();
-			stop_glerror();
+
 		}
 
 		// <FS:ND> FIRE-15789; Make sure there's not backlog for thousands and thousands of beam objects
 		LLHUDObject::renderAllForTimer();
 		// </FS:ND>
 
-		stop_glerror();
+
 		gViewerWindow->returnEmptyPicks();
-		stop_glerror();
+
 		return; 
 	}
 
@@ -419,7 +419,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 	//
 
 	LLAppViewer::instance()->pingMainloopTimeout("Display:TextureStats");
-	stop_glerror();
+
 
 	LLImageGL::updateStats(gFrameTimeSeconds);
 	
@@ -704,16 +704,16 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 	//
 	//
 	LLAppViewer::instance()->pingMainloopTimeout("Display:RenderSetup");
-	stop_glerror();
+
 
 	///////////////////////////////////////
 	//
 	// Slam lighting parameters back to our defaults.
 	// Note that these are not the same as GL defaults...
 
-	stop_glerror();
+
 	gGL.setAmbientLightColor(LLColor4::white);
-	stop_glerror();
+
 			
 	/////////////////////////////////////
 	//
@@ -754,9 +754,9 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 		//upkeep gl name pools
 		LLGLNamePool::upkeepPools();
 		
-		stop_glerror();
+
 		display_update_camera();
-		stop_glerror();
+
 				
 		{
 			LL_RECORD_BLOCK_TIME(FTM_EEP_UPDATE);
@@ -769,7 +769,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 			LL_RECORD_BLOCK_TIME(FTM_HUD_UPDATE);
 			LLHUDManager::getInstance()->updateEffects();
 			LLHUDObject::updateAll();
-			stop_glerror();
+
 		}
 
 		{
@@ -778,12 +778,12 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 			gPipeline.createObjects(max_geom_update_time);
 			gPipeline.processPartitionQ();
 			gPipeline.updateGeom(max_geom_update_time);
-			stop_glerror();
+
 		}
 
 		gPipeline.updateGL();
 		
-		stop_glerror();
+
 
 		S32 water_clip = 0;
 		if ((LLViewerShaderMgr::instance()->getShaderLevel(LLViewerShaderMgr::SHADER_ENVIRONMENT) > 1) &&
@@ -823,7 +823,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 		LLViewerCamera::sCurCameraID = LLViewerCamera::CAMERA_WORLD;
 		LLPipeline::sUnderWaterRender = camera.cameraUnderWater(); // <FS:Ansariel> Factor out calls to getInstance
 		gPipeline.updateCull(camera, result, water_clip); // <FS:Ansariel> Factor out calls to getInstance
-		stop_glerror();
+
 
 		LLGLState::checkStates();
 		LLGLState::checkTextureChannels();
@@ -936,7 +936,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 				LL_RECORD_BLOCK_TIME(FTM_IMAGE_UPDATE_DELETE);
 				//remove dead textures from GL
 				LLImageGL::deleteDeadTextures();
-				stop_glerror();
+
 			}*/
 			}
 
@@ -955,7 +955,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 		{
 			LLViewerCamera::sCurCameraID = LLViewerCamera::CAMERA_WORLD;
 			gPipeline.stateSort(camera, result); // <FS:Ansariel> Factor out calls to getInstance
-			stop_glerror();
+
 				
 			if (rebuild)
 			{
@@ -965,7 +965,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 				//
 				//
 				gPipeline.rebuildPools();
-				stop_glerror();
+
 			}
 		}
 
@@ -1039,7 +1039,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 		LLGLState::checkStates();
 		LLGLState::checkClientArrays();
 
-		stop_glerror();
+
 
         gGL.setColorMask(true, true);
 
@@ -1112,7 +1112,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 				gGLLastModelView[i] = gGLModelView[i];
 				gGLLastProjection[i] = gGLProjection[i];
 			}
-			stop_glerror();
+
 		}
 
 		{
@@ -1168,7 +1168,7 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 
 	LLAppViewer::instance()->pingMainloopTimeout("Display:FrameStats");
 	
-	stop_glerror();
+
 
 	if (LLPipeline::sRenderFrameTest)
 	{
@@ -1578,7 +1578,7 @@ void render_ui_3d()
 
 	// Debugging stuff goes before the UI.
 
-	stop_glerror();
+
 	gUIProgram.bind();
 
 
@@ -1593,7 +1593,7 @@ void render_ui_3d()
 	}
 
 	gViewerWindow->renderSelections(FALSE, FALSE, TRUE); // Non HUD call in render_hud_elements
-	stop_glerror();
+
 }
 
 void render_ui_2d()
@@ -1628,7 +1628,7 @@ void render_ui_2d()
 		LLFontGL::sCurOrigin.mY -= ll_round((F32)gViewerWindow->getWindowHeightScaled() * (F32)pos_y / zoom_factor);
 	}
 
-	stop_glerror();
+
 
 	// render outline for HUD
 	if (isAgentAvatarValid() && gAgentCamera.mHUDCurZoom < 0.98f)
@@ -1645,7 +1645,7 @@ void render_ui_2d()
 		gGL.color4fv(LLColor4::white.mV);
 		gl_rect_2d(-half_width, half_height, half_width, -half_height, FALSE);
 		gGL.popMatrix();
-		stop_glerror();
+
 	}
 	
 

@@ -2118,7 +2118,7 @@ void LLVOAvatar::buildCharacter()
 	processAnimationStateChanges();
 
 	mIsBuilt = TRUE;
-	stop_glerror();
+
 
 	mMeshValid = TRUE;
 }
@@ -2353,7 +2353,7 @@ void LLVOAvatar::updateMeshData()
 {
 	if (mDrawable.notNull())
 	{
-		stop_glerror();
+
 
 		S32 f_num = 0 ;
 		const U32 VERTEX_NUMBER_THRESHOLD = 128 ;//small number of this means each part of an avatar has its own vertex buffer.
@@ -2480,7 +2480,7 @@ void LLVOAvatar::updateMeshData()
 				}
 			}
 
-			stop_glerror();
+
 			buff->flush();
 
 			if(!f_num)
@@ -6407,7 +6407,7 @@ void LLVOAvatar::processAnimationStateChanges()
 		}
 	}
 
-	stop_glerror();
+
 }
 
 
@@ -10257,16 +10257,16 @@ void LLVOAvatar::onBakedTextureMasksLoaded( BOOL success, LLViewerFetchedTexture
 
 			U32 gl_name;
 			LLImageGL::generateTextures(1, &gl_name );
-			stop_glerror();
+
 
 			gGL.getTexUnit(0)->bindManual(LLTexUnit::TT_TEXTURE, gl_name);
-			stop_glerror();
+
 
 			LLImageGL::setManualImage(
 				GL_TEXTURE_2D, 0, GL_ALPHA8, 
 				aux_src->getWidth(), aux_src->getHeight(),
 				GL_ALPHA, GL_UNSIGNED_BYTE, aux_src->getData());
-			stop_glerror();
+
 
 			gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_BILINEAR);
 

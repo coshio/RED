@@ -2200,7 +2200,7 @@ void LLDrawPoolAvatar::renderRigged(LLVOAvatar* avatar, U32 type, bool glow)
 		return;
 	}
 
-	stop_glerror();
+
 
 	for (U32 i = 0; i < mRiggedFace[type].size(); ++i)
 	{
@@ -2247,12 +2247,12 @@ void LLDrawPoolAvatar::renderRigged(LLVOAvatar* avatar, U32 type, bool glow)
 		}
 		// </FS:Ansariel>
 
-		//stop_glerror();
+		//
 
 		//const LLVolumeFace& vol_face = volume->getVolumeFace(te);
 		//updateRiggedFaceVertexBuffer(avatar, face, skin, volume, vol_face);
 
-		//stop_glerror();
+		//
 
 		U32 data_mask = LLFace::getRiggedDataMask(type);
 
@@ -2354,7 +2354,7 @@ void LLDrawPoolAvatar::renderRigged(LLVOAvatar* avatar, U32 type, bool glow)
 				auto mat = getCacheSkinningMats(drawable, skin, count, avatar);
 				//</FS:Beq>
 
-				stop_glerror();
+
 
 				F32 mp[LL_MAX_JOINTS_PER_MESH_OBJECT*12];
 
@@ -2385,7 +2385,7 @@ void LLDrawPoolAvatar::renderRigged(LLVOAvatar* avatar, U32 type, bool glow)
 					FALSE,
 					(GLfloat*) mp);
 
-				stop_glerror();
+
 			}
 			else
 			{
@@ -2553,7 +2553,7 @@ void LLDrawPoolAvatar::updateRiggedVertexBuffers(LLVOAvatar* avatar)
 				continue;
 			}
 
-			stop_glerror();
+
 
 			LLVolumeFace& vol_face = volume->getVolumeFace(te);
 			updateRiggedFaceVertexBuffer(avatar, face, skin, volume, vol_face);

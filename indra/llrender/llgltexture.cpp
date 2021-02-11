@@ -62,8 +62,7 @@ LLGLTexture::LLGLTexture(const U32 width, const U32 height, const U8 components,
 	setTexelsPerImage();
 }
 
-LLGLTexture::LLGLTexture(const LLImageRaw* raw, BOOL usemipmaps)
-{
+LLGLTexture::LLGLTexture(const LLImageRaw* raw, BOOL usemipmaps){
 	init();
 	mUseMipMaps = usemipmaps ;
 	// Create an empty image of the specified size and width

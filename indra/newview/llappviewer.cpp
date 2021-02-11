@@ -3607,7 +3607,7 @@ bool LLAppViewer::initWindow()
 	gPipeline.init();
 	LL_INFOS("AppInit") << "gPipeline Initialized" << LL_ENDL;
 
-	stop_glerror();
+
 	gViewerWindow->initGLDefaults();
 
 	gSavedSettings.setBOOL("RenderInitError", FALSE);

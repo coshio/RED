@@ -292,7 +292,7 @@ void LLFloaterImagePreview::draw()
 				
 				gGL.getTexUnit(0)->unbind(mImagep->getTarget()) ;
 				gGL.getTexUnit(0)->bindManual(LLTexUnit::TT_TEXTURE, mImagep->getTexName());
-				stop_glerror();
+
 
 				gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_BILINEAR);
 				
@@ -339,7 +339,7 @@ void LLFloaterImagePreview::draw()
 
 			gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
 
-			stop_glerror();
+
 		}
 		else
 		{
@@ -754,7 +754,7 @@ BOOL LLImagePreviewAvatar::render()
 		LLVector3::z_axis,																	// up
 		target_pos + (mCameraOffset  * av_rot) );											// point of interest
 
-	stop_glerror();
+
 
 	LLViewerCamera::getInstance()->setAspect((F32)mFullWidth / mFullHeight);
 	LLViewerCamera::getInstance()->setView(LLViewerCamera::getInstance()->getDefaultFOV() / mCameraZoom);
@@ -954,7 +954,7 @@ BOOL LLImagePreviewSculpted::render()
 		LLVector3::z_axis,																	// up
 		target_pos + (mCameraOffset  * av_rot) );											// point of interest
 
-	stop_glerror();
+
 
 	LLViewerCamera::getInstance()->setAspect((F32) mFullWidth / mFullHeight);
 	LLViewerCamera::getInstance()->setView(LLViewerCamera::getInstance()->getDefaultFOV() / mCameraZoom);

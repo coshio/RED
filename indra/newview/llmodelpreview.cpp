@@ -3232,7 +3232,7 @@ BOOL LLModelPreview::render()
 
     LLViewerCamera::getInstance()->setPerspective(FALSE, mOrigin.mX, mOrigin.mY, width, height, FALSE, z_near, z_far);
 
-    stop_glerror();
+
 
     gGL.pushMatrix();
     gGL.color4fv(edge_col().mV); // <FS:Beq/> restore changes removed by the lab

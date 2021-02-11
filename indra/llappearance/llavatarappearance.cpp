@@ -855,7 +855,7 @@ void LLAvatarAppearance::buildCharacter()
 	LLTimer timer;
 
 	BOOL status = loadAvatar();
-	stop_glerror();
+
 
 // 	gPrintMessagesThisFrame = TRUE;
 	LL_DEBUGS() << "Avatar load took " << timer.getElapsedTimeF32() << " seconds." << LL_ENDL;
@@ -928,7 +928,7 @@ void LLAvatarAppearance::buildCharacter()
 	mPelvisp->setPosition( LLVector3(0.0f, 0.0f, 0.0f) );
 
 	mIsBuilt = TRUE;
-	stop_glerror();
+
 
 }
 
@@ -1278,7 +1278,7 @@ BOOL LLAvatarAppearance::loadLayersets()
 			
 			if (!layer_set->setInfo(layerset_info))
 			{
-				stop_glerror();
+
 				delete layer_set;
 				LL_WARNS() << "avatar file: layer_set->setInfo() failed" << LL_ENDL;
 				return FALSE;

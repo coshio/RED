@@ -200,19 +200,17 @@ void LLDrawPoolSimple::beginRenderPass(S32 pass)
 	else 
 	{
 		// don't use shaders!
-		if (gGLManager.mHasShaderObjects)
-		{
-			LLGLSLShader::bindNoShader();
-		}		
+		LLGLSLShader::bindNoShader();
+
 	}
 }
 
 void LLDrawPoolSimple::endRenderPass(S32 pass)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_SIMPLE);
-	stop_glerror();
+
 	LLRenderPass::endRenderPass(pass);
-	stop_glerror();
+
 	if (mShaderLevel > 0)
 	{
 		simple_shader->unbind();
@@ -302,19 +300,17 @@ void LLDrawPoolAlphaMask::beginRenderPass(S32 pass)
 	else 
 	{
 		// don't use shaders!
-		if (gGLManager.mHasShaderObjects)
-		{
-			LLGLSLShader::bindNoShader();
-		}		
+		LLGLSLShader::bindNoShader();
+
 	}
 }
 
 void LLDrawPoolAlphaMask::endRenderPass(S32 pass)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_ALPHA_MASK);
-	stop_glerror();
+
 	LLRenderPass::endRenderPass(pass);
-	stop_glerror();
+
 	if (mShaderLevel > 0)
 	{
 		simple_shader->unbind();
@@ -392,19 +388,16 @@ void LLDrawPoolFullbrightAlphaMask::beginRenderPass(S32 pass)
 	else 
 	{
 		// don't use shaders!
-		if (gGLManager.mHasShaderObjects)
-		{
-			LLGLSLShader::bindNoShader();
-		}		
+		LLGLSLShader::bindNoShader();
 	}
 }
 
 void LLDrawPoolFullbrightAlphaMask::endRenderPass(S32 pass)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_ALPHA_MASK);
-	stop_glerror();
+
 	LLRenderPass::endRenderPass(pass);
-	stop_glerror();
+
 	if (mShaderLevel > 0)
 	{
 		simple_shader->unbind();
@@ -538,7 +531,7 @@ void LLDrawPoolGrass::prerender()
 void LLDrawPoolGrass::beginRenderPass(S32 pass)
 {
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_GRASS);
-	stop_glerror();
+
 
 	if (LLPipeline::sUnderWaterRender)
 	{
@@ -553,22 +546,16 @@ void LLDrawPoolGrass::beginRenderPass(S32 pass)
 	{
 		simple_shader->bind();
 		simple_shader->setMinimumAlpha(0.5f);
-        if (LLPipeline::sRenderingHUDs)
-	    {
+        if (LLPipeline::sRenderingHUDs) {
 		    simple_shader->uniform1i(LLShaderMgr::NO_ATMO, 1);
 	    }
-	    else
-	    {
+	    else {
 		    simple_shader->uniform1i(LLShaderMgr::NO_ATMO, 0);
 	    }
 	}
-	else 
-	{
+	else {
 		// don't use shaders!
-		if (gGLManager.mHasShaderObjects)
-		{
-			LLGLSLShader::bindNoShader();
-		}		
+		LLGLSLShader::bindNoShader();
 	}
 }
 
@@ -698,14 +685,14 @@ void LLDrawPoolFullbright::endRenderPass(S32 pass)
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_FULLBRIGHT);
 	LLRenderPass::endRenderPass(pass);
 
-	stop_glerror();
+
 
 	if (mShaderLevel > 0)
 	{
 		fullbright_shader->unbind();
 	}
 
-	stop_glerror();
+
 }
 
 void LLDrawPoolFullbright::render(S32 pass)
@@ -713,7 +700,7 @@ void LLDrawPoolFullbright::render(S32 pass)
 	LL_RECORD_BLOCK_TIME(FTM_RENDER_FULLBRIGHT);
 	gGL.setSceneBlendType(LLRender::BT_ALPHA);
 
-	stop_glerror();
+
 
 	if (mShaderLevel > 0)
 	{
@@ -748,7 +735,7 @@ void LLDrawPoolFullbright::render(S32 pass)
 		pushBatches(LLRenderPass::PASS_NORMSPEC_EMISSIVE, fullbright_mask);
 	}
 
-	stop_glerror();
+
 }
 
 S32 LLDrawPoolFullbright::getNumPasses()

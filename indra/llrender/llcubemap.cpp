@@ -90,7 +90,7 @@ void LLCubeMap::initGL()
 
 				gGL.getTexUnit(0)->bindManual(LLTexUnit::TT_CUBE_MAP, texname);
 				mImages[i]->setAddressMode(LLTexUnit::TAM_CLAMP);
-				stop_glerror();
+
 			}
 			gGL.getTexUnit(0)->disable();
 		}

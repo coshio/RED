@@ -56,8 +56,7 @@ S32 LLDrawPool::sNumDrawPools = 0;
 //=============================
 // Draw Pool Implementation
 //=============================
-LLDrawPool *LLDrawPool::createPool(const U32 type, LLViewerTexture *tex0)
-{
+LLDrawPool *LLDrawPool::createPool(const U32 type, LLViewerTexture *tex0) {
 	LLDrawPool *poolp = NULL;
 	switch (type)
 	{
@@ -123,8 +122,7 @@ LLDrawPool *LLDrawPool::createPool(const U32 type, LLViewerTexture *tex0)
 	return poolp;
 }
 
-LLDrawPool::LLDrawPool(const U32 type)
-{
+LLDrawPool::LLDrawPool(const U32 type) {
 	mType = type;
 	sNumDrawPools++;
 	mId = sNumDrawPools;
@@ -132,19 +130,16 @@ LLDrawPool::LLDrawPool(const U32 type)
 	mSkipRender = false;
 }
 
-LLDrawPool::~LLDrawPool()
-{
+LLDrawPool::~LLDrawPool() {
 
 }
 
-LLViewerTexture *LLDrawPool::getDebugTexture()
-{
+LLViewerTexture *LLDrawPool::getDebugTexture() {
 	return NULL;
 }
 
 //virtual
-void LLDrawPool::beginRenderPass( S32 pass )
-{
+void LLDrawPool::beginRenderPass( S32 pass ) {
 }
 
 //virtual 
@@ -280,28 +275,22 @@ BOOL LLFacePool::addFace(LLFace *facep)
 }
 
 // virtual
-BOOL LLFacePool::removeFace(LLFace *facep)
-{
+BOOL LLFacePool::removeFace(LLFace *facep){
 	removeFaceReference(facep);
-
 	vector_replace_with_last(mDrawFace, facep);
-
 	return TRUE;
 }
 
 // Not absolutely sure if we should be resetting all of the chained pools as well - djs
-void LLFacePool::resetDrawOrders()
-{
+void LLFacePool::resetDrawOrders(){
 	mDrawFace.resize(0);
 }
 
-LLViewerTexture *LLFacePool::getTexture()
-{
+LLViewerTexture *LLFacePool::getTexture() {
 	return NULL;
 }
 
-void LLFacePool::removeFaceReference(LLFace *facep)
-{
+void LLFacePool::removeFaceReference(LLFace *facep){
 	if (facep->getReferenceIndex() != -1)
 	{
 		if (facep->getReferenceIndex() != (S32)mReferences.size())
