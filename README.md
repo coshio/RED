@@ -2,9 +2,6 @@
 
 These are some Second Life shader and client modifications I conducted to the 3rd party client called firestorm. Most of the work here done was implemented based on the tutorials from https://learnopengl.com/ and from plenty of help from patient and brilliant individuals in a graphics programming discord. Most of this stuff is nothing more than an exercise of learning and teaching myself 3D graphics, but I have sadly reached the point where I need to work on rendering engines from scratch to really understand them rather than just modifying them. However, I still intend to keep poking at this project when I have time.
 
-video: https://i.gyazo.com/c121f969750c891f752fb7ea27ffab8e.mp4
-
-
 So whats changed?
 - **Shader Side:** Proper layout qualifiers instead of the dated varyings and out qualifiers.
 - **Shader Side:** Modified the SSAO shader and utilities in aoUtil.glsl to require a bit less math and added a few samples.
@@ -35,3 +32,10 @@ Why did I do this?
 - People have been dreaming and salivating at the thought of physically based rendering in Second Life for quite some time, and I had hoped that if I fixed stuff up enough, it might force the developers to invest more in the graphics side of the game.
 - I create and sell content in Second Life, and Ive looked at the rendering engine and noticed there is no shortage of data to work with and things should be able to look better. Specifically, I want metallic items to not resemble a grey muddied smear.
 - TLDR: I know its possible, and I want to prove it can be done.
+
+Eye Candy
+![Alt Text](https://i.gyazo.com/75df3048684a095ab5d2b6a8eb3957d3.gif)
+
+
+
+
