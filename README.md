@@ -37,8 +37,9 @@ These are some Second Life shader and client modifications I conducted to the 3r
 ![Alt Text](https://i.gyazo.com/d5d902f64c963adcdf658dee114c33b1.png)
 ![Alt Text](https://i.gyazo.com/938ff7f52defdbd0dce54f718eefd2be.png)
 
-**Video:** https://i.gyazo.com/75df3048684a095ab5d2b6a8eb3957d3.mp4
-**Video:** https://i.gyazo.com/c121f969750c891f752fb7ea27ffab8e.mp4
-**Video:** https://i.gyazo.com/3ccc1925f38409231ea6e391a0c77860.mp4
+**Videos**
+https://i.gyazo.com/75df3048684a095ab5d2b6a8eb3957d3.mp4
+https://i.gyazo.com/c121f969750c891f752fb7ea27ffab8e.mp4
+https://i.gyazo.com/3ccc1925f38409231ea6e391a0c77860.mp4
 
 
