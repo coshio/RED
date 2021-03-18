@@ -8,7 +8,7 @@ These are some Second Life shader and client modifications I conducted to the 3r
 - **Shader Side:** Small optimizations like reimplementing operations to use multiply, add, and divide operations to hopefully boost performance if the compiler misses them.
 - **Shader Side:** Swapping over deferred lighting BRDF used for pointlighting and environmental lighting. (This was primarily conducted in the materialsf.glsl, softenlightf.glsl, pointlightF.glsl in the class 1 and class 2 shaders.
 - **Shader Side:** Recycled some of the data provided by the client that was used for environmental lighting to allow for physically based reflectance, rather than the defualt non energy preserving strange normalized blinn phong model Linden Labs was using. Currently the shaders are inverting a gloss map that is packed in the alpha channel of the normal map to allow for roughness calculations, it recycles the environmental shine map packed in the specular alpha channel as a metallic map, as that seems to be the intent of it anyways, and lastly uses diffuse as albedo. TLDR, I've moving stuff to a roughness, metallic, and albedo model.
-- **Client Side:** Gutted as much as possible of preOpenGL 4.2 code and am currently remove as much fixed function or software rendering code from the client.
+- **Client Side:** Gutted as much as possible of preOpenGL 4.2 code and am currently removing as much fixed function or software rendering code from the client.
 
 
 **What needs to be done?**
